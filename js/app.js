@@ -174,17 +174,20 @@ window.PA = window.PA || {};
     const fillVoices = () => {
       const sel = $('pVoice'), list = A.voices(), cur = A.currentVoice();
       const nice = v => /premium|enhanced|natural|neural|online/i.test(v.name + ' ' + v.voiceURI);
-      sel.innerHTML = '<option value="">Automatic' + (cur ? ' (' + cur.name.replace(/ *\(.*\)/, '') + ')' : '') + '</option>' +
-        list.map(v => '<option value="' + v.voiceURI.replace(/"/g, '&quot;') + '">' + v.name + ' (' + v.lang + ')' + (nice(v) ? ' ★' : '') + '</option>').join('');
-      sel.value = st.settings.voice || '';
+      const esc = x => String(x).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+      const label = v => v.name.replace(/ *\(.*\)/, '') + ' (' + A.accent(v) + ')' + (nice(v) && !A.isIOS ? ' ★' : '');
+      sel.innerHTML = '<option value="">Automatic' + (cur ? ': ' + esc(label(cur)) : '') + '</option>' +
+        list.map(v => '<option value="' + esc(A.voiceKey(v)) + '">' + esc(label(v)) + '</option>').join('');
+      sel.value = list.some(v => A.voiceKey(v) === st.settings.voice) ? st.settings.voice : '';
       const now = A.currentVoice();
-      $('pVoiceTip').innerHTML = (now ? 'Speaking with: <b>' + now.name + '</b> (' + now.lang + ')' + (nice(now) ? ' ★' : '') + '. ' : 'No voice found yet. ') + (list.some(nice)
-        ? 'Voices marked ★ are the smooth, natural ones.'
-        : 'For a much more natural voice on iPad or iPhone: Settings, Accessibility, Spoken Content, Voices, English, then download <b>Ava (Premium)</b> or <b>Samantha (Enhanced)</b>. Come back here and it is picked automatically.');
+      $('pVoiceTip').innerHTML = (now ? 'Speaking with: <b>' + esc(label(now)) + '</b>. ' : 'No voice found yet. ') + (A.isIOS
+        ? 'On iPad and iPhone, web pages can only use one voice per accent, so only those are listed (for American English it is always Samantha; downloaded voices like Ava can\'t be used by web pages). For a smoother Samantha, try downloading <b>Samantha (Enhanced)</b>: Settings, Accessibility, Spoken Content, Voices, English.'
+        : list.some(nice) ? 'Voices marked ★ are the smooth, natural ones.'
+        : 'For a more natural voice, install an Enhanced or Natural English voice in this device\'s speech settings; it is picked automatically.');
     };
     fillVoices(); A.onVoices = fillVoices;
     const SAMPLE = "Hello! Let's count the princess's jewels: one, two, three. Which one rhymes with cat? Hat, sun, or dog?";
-    $('pVoice').onchange = e => { st.settings.voice = e.target.value; S.save(); applySettings(); A.say(SAMPLE); };
+    $('pVoice').onchange = e => { st.settings.voice = e.target.value; S.save(); applySettings(); fillVoices(); A.say(SAMPLE); };
     $('pTest').onclick = () => A.say(SAMPLE);
     $('pSfx').onchange = e => { st.settings.sfx = e.target.value === '1'; S.save(); applySettings(); };
     const today = new Date(st.play.windowStart).toDateString() === new Date().toDateString();

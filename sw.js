@@ -1,5 +1,5 @@
 // Offline cache. Only used when the app is served over HTTPS (iOS ignores service workers on plain http).
-const VERSION = 'pa-v6';
+const VERSION = 'pa-v7';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',
   'js/audio.js', 'js/store.js', 'js/art.js', 'js/ui.js', 'js/app.js',

@@ -433,15 +433,30 @@ window.PA = window.PA || {};
     if (MALE.test(v.name) && !/female/i.test(v.name)) s -= 8;
     return s;
   };
+  // iPhone / iPad (iPadOS reports itself as a Mac, so also check for touch). Safari on iOS lists every installed
+  // voice, but a web page can only really use ONE voice per accent: asking for any other US voice (Ava, Allison...)
+  // quietly plays Samantha. So on iOS only the voices that actually work are offered, one per accent.
+  A.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const IOS_OK = /^(Samantha|Karen|Daniel|Moira|Tessa|Rishi)\b/;
+  const ACCENT = { US: 'American', GB: 'British', AU: 'Australian', IE: 'Irish', ZA: 'South African', IN: 'Indian', NZ: 'New Zealand', CA: 'Canadian', SC: 'Scottish' };
+  A.accent = v => ACCENT[(v.lang.split(/[-_]/)[1] || '').toUpperCase()] || v.lang;
+  A.voiceKey = v => (v.voiceURI || '') + '|' + v.name + '|' + v.lang;
   A.voices = function () {
     if (!window.speechSynthesis) return [];
-    return (speechSynthesis.getVoices() || []).filter(v => A.scoreVoice(v) > -1000).sort((a, b) => A.scoreVoice(b) - A.scoreVoice(a));
+    let list = (speechSynthesis.getVoices() || []).filter(v => A.scoreVoice(v) > -1000).sort((a, b) => A.scoreVoice(b) - A.scoreVoice(a));
+    if (A.isIOS) {
+      const ok = list.filter(v => IOS_OK.test(v.name));
+      if (ok.length) list = ok;
+      const seen = {};
+      list = list.filter(v => { const k = v.lang.replace('_', '-'); if (seen[k]) return false; seen[k] = 1; return true; });
+    }
+    return list;
   };
   function pickVoice() {
     if (voice || !window.speechSynthesis) return voice;
     const list = A.voices();
     if (!list.length) return null;
-    voice = (A.voiceURI && list.find(v => v.voiceURI === A.voiceURI)) || list[0];
+    voice = (A.voiceURI && (list.find(v => A.voiceKey(v) === A.voiceURI) || list.find(v => v.voiceURI === A.voiceURI))) || list[0];
     return voice;
   }
   A.setVoice = function (uri) { A.voiceURI = uri || ''; voice = null; pickVoice(); };
@@ -3081,17 +3096,20 @@ window.PA = window.PA || {};
     const fillVoices = () => {
       const sel = $('pVoice'), list = A.voices(), cur = A.currentVoice();
       const nice = v => /premium|enhanced|natural|neural|online/i.test(v.name + ' ' + v.voiceURI);
-      sel.innerHTML = '<option value="">Automatic' + (cur ? ' (' + cur.name.replace(/ *\(.*\)/, '') + ')' : '') + '</option>' +
-        list.map(v => '<option value="' + v.voiceURI.replace(/"/g, '&quot;') + '">' + v.name + ' (' + v.lang + ')' + (nice(v) ? ' ★' : '') + '</option>').join('');
-      sel.value = st.settings.voice || '';
+      const esc = x => String(x).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+      const label = v => v.name.replace(/ *\(.*\)/, '') + ' (' + A.accent(v) + ')' + (nice(v) && !A.isIOS ? ' ★' : '');
+      sel.innerHTML = '<option value="">Automatic' + (cur ? ': ' + esc(label(cur)) : '') + '</option>' +
+        list.map(v => '<option value="' + esc(A.voiceKey(v)) + '">' + esc(label(v)) + '</option>').join('');
+      sel.value = list.some(v => A.voiceKey(v) === st.settings.voice) ? st.settings.voice : '';
       const now = A.currentVoice();
-      $('pVoiceTip').innerHTML = (now ? 'Speaking with: <b>' + now.name + '</b> (' + now.lang + ')' + (nice(now) ? ' ★' : '') + '. ' : 'No voice found yet. ') + (list.some(nice)
-        ? 'Voices marked ★ are the smooth, natural ones.'
-        : 'For a much more natural voice on iPad or iPhone: Settings, Accessibility, Spoken Content, Voices, English, then download <b>Ava (Premium)</b> or <b>Samantha (Enhanced)</b>. Come back here and it is picked automatically.');
+      $('pVoiceTip').innerHTML = (now ? 'Speaking with: <b>' + esc(label(now)) + '</b>. ' : 'No voice found yet. ') + (A.isIOS
+        ? 'On iPad and iPhone, web pages can only use one voice per accent, so only those are listed (for American English it is always Samantha; downloaded voices like Ava can\'t be used by web pages). For a smoother Samantha, try downloading <b>Samantha (Enhanced)</b>: Settings, Accessibility, Spoken Content, Voices, English.'
+        : list.some(nice) ? 'Voices marked ★ are the smooth, natural ones.'
+        : 'For a more natural voice, install an Enhanced or Natural English voice in this device\'s speech settings; it is picked automatically.');
     };
     fillVoices(); A.onVoices = fillVoices;
     const SAMPLE = "Hello! Let's count the princess's jewels: one, two, three. Which one rhymes with cat? Hat, sun, or dog?";
-    $('pVoice').onchange = e => { st.settings.voice = e.target.value; S.save(); applySettings(); A.say(SAMPLE); };
+    $('pVoice').onchange = e => { st.settings.voice = e.target.value; S.save(); applySettings(); fillVoices(); A.say(SAMPLE); };
     $('pTest').onclick = () => A.say(SAMPLE);
     $('pSfx').onchange = e => { st.settings.sfx = e.target.value === '1'; S.save(); applySettings(); };
     const today = new Date(st.play.windowStart).toDateString() === new Date().toDateString();

@@ -34,15 +34,30 @@ window.PA = window.PA || {};
     if (MALE.test(v.name) && !/female/i.test(v.name)) s -= 8;
     return s;
   };
+  // iPhone / iPad (iPadOS reports itself as a Mac, so also check for touch). Safari on iOS lists every installed
+  // voice, but a web page can only really use ONE voice per accent: asking for any other US voice (Ava, Allison...)
+  // quietly plays Samantha. So on iOS only the voices that actually work are offered, one per accent.
+  A.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const IOS_OK = /^(Samantha|Karen|Daniel|Moira|Tessa|Rishi)\b/;
+  const ACCENT = { US: 'American', GB: 'British', AU: 'Australian', IE: 'Irish', ZA: 'South African', IN: 'Indian', NZ: 'New Zealand', CA: 'Canadian', SC: 'Scottish' };
+  A.accent = v => ACCENT[(v.lang.split(/[-_]/)[1] || '').toUpperCase()] || v.lang;
+  A.voiceKey = v => (v.voiceURI || '') + '|' + v.name + '|' + v.lang;
   A.voices = function () {
     if (!window.speechSynthesis) return [];
-    return (speechSynthesis.getVoices() || []).filter(v => A.scoreVoice(v) > -1000).sort((a, b) => A.scoreVoice(b) - A.scoreVoice(a));
+    let list = (speechSynthesis.getVoices() || []).filter(v => A.scoreVoice(v) > -1000).sort((a, b) => A.scoreVoice(b) - A.scoreVoice(a));
+    if (A.isIOS) {
+      const ok = list.filter(v => IOS_OK.test(v.name));
+      if (ok.length) list = ok;
+      const seen = {};
+      list = list.filter(v => { const k = v.lang.replace('_', '-'); if (seen[k]) return false; seen[k] = 1; return true; });
+    }
+    return list;
   };
   function pickVoice() {
     if (voice || !window.speechSynthesis) return voice;
     const list = A.voices();
     if (!list.length) return null;
-    voice = (A.voiceURI && list.find(v => v.voiceURI === A.voiceURI)) || list[0];
+    voice = (A.voiceURI && (list.find(v => A.voiceKey(v) === A.voiceURI) || list.find(v => v.voiceURI === A.voiceURI))) || list[0];
     return voice;
   }
   A.setVoice = function (uri) { A.voiceURI = uri || ''; voice = null; pickVoice(); };
