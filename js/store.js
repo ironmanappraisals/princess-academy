@@ -10,7 +10,7 @@ window.PA = window.PA || {};
 
   const blank = () => ({
     profile: { made: false, skin: 1, hair: 0, dress: 0, name: '' },
-    settings: { limitMin: 20, rate: 0.9, sfx: true, roundLen: 10 },
+    settings: { limitMin: 20, rate: 0.9, sfx: true, roundLen: 10, voice: '' },
     games: {},
     stickers: [],
     play: { windowStart: 0, ms: 0, last: 0 }

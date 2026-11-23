@@ -5,7 +5,7 @@ window.PA = window.PA || {};
   const U = PA.ui, S = PA.store, A = PA.audio;
   const app = PA.app = {};
   const st = S.state;
-  const applySettings = () => { A.rate = st.settings.rate; A.sfxOn = st.settings.sfx; };
+  const applySettings = () => { A.rate = st.settings.rate; A.sfxOn = st.settings.sfx; A.setVoice(st.settings.voice); };
   applySettings();
 
   // ---------- start ----------
@@ -154,6 +154,8 @@ window.PA = window.PA || {};
       <label>Child's name (said out loud) <input type="text" id="pName" maxlength="20" autocomplete="off" autocorrect="off" spellcheck="false"></label>
       <label>Play time per day <select id="pLimit"><option value="0">No limit</option><option value="10">10 minutes</option><option value="15">15 minutes</option><option value="20">20 minutes</option><option value="30">30 minutes</option><option value="45">45 minutes</option></select></label>
       <label>Questions per round <select id="pLen"><option value="5">5 (short)</option><option value="10">10</option><option value="15">15 (long)</option></select></label>
+      <label>Voice <span><select id="pVoice"></select> <button type="button" class="chip" id="pTest">▶ Test</button></span></label>
+      <div class="muted" id="pVoiceTip"></div>
       <label>Voice speed <select id="pRate"><option value="0.8">Slow</option><option value="0.9">Normal</option><option value="1">Faster</option></select></label>
       <label>Sound effects <select id="pSfx"><option value="1">On</option><option value="0">Off</option></select></label>
       <div class="muted" id="pToday"></div>`;
@@ -168,6 +170,21 @@ window.PA = window.PA || {};
     $('pName').oninput = e => { st.profile.name = e.target.value.slice(0, 20); S.save(); };
     $('pLimit').onchange = e => { st.settings.limitMin = Number(e.target.value); S.save(); };
     $('pRate').onchange = e => { st.settings.rate = Number(e.target.value); S.save(); applySettings(); A.say('This is how fast I will talk.'); };
+    // voices: best-sounding first; Enhanced / Premium / Natural voices are much smoother than the built-in compact ones
+    const fillVoices = () => {
+      const sel = $('pVoice'), list = A.voices(), cur = A.currentVoice();
+      const nice = v => /premium|enhanced|natural|neural|online/i.test(v.name + ' ' + v.voiceURI);
+      sel.innerHTML = '<option value="">Automatic' + (cur ? ' (' + cur.name.replace(/ *\(.*\)/, '') + ')' : '') + '</option>' +
+        list.map(v => '<option value="' + v.voiceURI.replace(/"/g, '&quot;') + '">' + v.name + ' (' + v.lang + ')' + (nice(v) ? ' ★' : '') + '</option>').join('');
+      sel.value = st.settings.voice || '';
+      $('pVoiceTip').innerHTML = list.some(nice)
+        ? 'Voices marked ★ are the smooth, natural ones.'
+        : 'For a much more natural voice on iPad or iPhone: Settings, Accessibility, Spoken Content, Voices, English, then download <b>Ava (Premium)</b> or <b>Samantha (Enhanced)</b>. Come back here and it is picked automatically.';
+    };
+    fillVoices(); A.onVoices = fillVoices;
+    const SAMPLE = "Hello! Let's count the princess's jewels: one, two, three. Which one rhymes with cat? Hat, sun, or dog?";
+    $('pVoice').onchange = e => { st.settings.voice = e.target.value; S.save(); applySettings(); A.say(SAMPLE); };
+    $('pTest').onclick = () => A.say(SAMPLE);
     $('pSfx').onchange = e => { st.settings.sfx = e.target.value === '1'; S.save(); applySettings(); };
     const today = new Date(st.play.windowStart).toDateString() === new Date().toDateString();
     const mins = today ? Math.round(st.play.ms / 60000) : 0;
