@@ -22,7 +22,7 @@ window.PA = window.PA || {};
   // the guide is a princess, so lean toward a female voice when nothing better is installed
   const MALE = /\b(david|mark|guy|daniel|alex|tom|aaron|arthur|rishi|oliver|george|james|ryan|christopher|eric|andrew|brian|roger|steffan|male)\b/i;
   A.scoreVoice = function (v) {
-    if (!/^en[-_]/i.test(v.lang) || NOVELTY.test(v.name)) return -1;
+    if (!/^en[-_]/i.test(v.lang) || NOVELTY.test(v.name)) return -1000;
     const id = v.name + ' ' + (v.voiceURI || '');
     let s = 10;
     if (/premium/i.test(id)) s += 60;
@@ -36,7 +36,7 @@ window.PA = window.PA || {};
   };
   A.voices = function () {
     if (!window.speechSynthesis) return [];
-    return (speechSynthesis.getVoices() || []).filter(v => A.scoreVoice(v) >= 0).sort((a, b) => A.scoreVoice(b) - A.scoreVoice(a));
+    return (speechSynthesis.getVoices() || []).filter(v => A.scoreVoice(v) > -1000).sort((a, b) => A.scoreVoice(b) - A.scoreVoice(a));
   };
   function pickVoice() {
     if (voice || !window.speechSynthesis) return voice;
@@ -46,7 +46,7 @@ window.PA = window.PA || {};
     return voice;
   }
   A.setVoice = function (uri) { A.voiceURI = uri || ''; voice = null; pickVoice(); };
-  A.currentVoice = () => pickVoice();
+  A.currentVoice = () => { voice = null; return pickVoice(); };
   if (window.speechSynthesis && 'onvoiceschanged' in speechSynthesis) {
     speechSynthesis.onvoiceschanged = () => { voice = null; pickVoice(); if (A.onVoices) A.onVoices(); };
   }
@@ -118,6 +118,8 @@ window.PA = window.PA || {};
       if (!window.speechSynthesis) { startTimeline(); return; }
       try {
         const u = new SpeechSynthesisUtterance(text);
+        // re-check every time: iPads don't announce newly downloaded voices, and a home-screen app can stay open for days
+        voice = null;
         const v = pickVoice();
         if (v) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
         u.rate = A.rate; u.pitch = 1.04; // a high pitch exaggerates the synthetic edge

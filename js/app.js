@@ -177,9 +177,10 @@ window.PA = window.PA || {};
       sel.innerHTML = '<option value="">Automatic' + (cur ? ' (' + cur.name.replace(/ *\(.*\)/, '') + ')' : '') + '</option>' +
         list.map(v => '<option value="' + v.voiceURI.replace(/"/g, '&quot;') + '">' + v.name + ' (' + v.lang + ')' + (nice(v) ? ' ★' : '') + '</option>').join('');
       sel.value = st.settings.voice || '';
-      $('pVoiceTip').innerHTML = list.some(nice)
+      const now = A.currentVoice();
+      $('pVoiceTip').innerHTML = (now ? 'Speaking with: <b>' + now.name + '</b> (' + now.lang + ')' + (nice(now) ? ' ★' : '') + '. ' : 'No voice found yet. ') + (list.some(nice)
         ? 'Voices marked ★ are the smooth, natural ones.'
-        : 'For a much more natural voice on iPad or iPhone: Settings, Accessibility, Spoken Content, Voices, English, then download <b>Ava (Premium)</b> or <b>Samantha (Enhanced)</b>. Come back here and it is picked automatically.';
+        : 'For a much more natural voice on iPad or iPhone: Settings, Accessibility, Spoken Content, Voices, English, then download <b>Ava (Premium)</b> or <b>Samantha (Enhanced)</b>. Come back here and it is picked automatically.');
     };
     fillVoices(); A.onVoices = fillVoices;
     const SAMPLE = "Hello! Let's count the princess's jewels: one, two, three. Which one rhymes with cat? Hat, sun, or dog?";
