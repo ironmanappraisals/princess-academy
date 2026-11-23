@@ -497,19 +497,70 @@ window.PA = window.PA || {};
     try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) { }
   };
 
-  // Speak text; resolves when finished (or after a length-based fallback, because iOS sometimes drops onend).
+  // Pauses. iPad voices barely pause at commas or question marks, so the instruction runs straight into the options
+  // ("which one rhymes with cat hat sun or dog"). Instead each sentence, and each item of a list, is spoken as its own
+  // little utterance with a real silence after it:
+  //   "Which one rhymes with cat?" [pause] "hat" [short pause] "sun" [short pause] "or dog?"
+  A.PAUSE_SENTENCE = 450;   // ms after a sentence or a "Look at this:" lead-in
+  A.PAUSE_ITEM = 320;       // ms between the things in a list (options, beads, numbers being counted)
+  const words = s => s.replace(/^(or|and)\s+/i, '').split(/\s+/).filter(Boolean).length;
+  A.segments = function (raw) {
+    const t = String(raw).replace(/\s+/g, ' ').trim();
+    const out = [];
+    const push = (text, pause) => { text = text.trim(); if (text && /[A-Za-z0-9]/.test(text)) out.push({ text, pause }); else if (out.length && pause > out[out.length - 1].pause) out[out.length - 1].pause = pause; };
+    // a sentence-sized piece: a comma list of 3+ short items ("red heart, star, red heart") is split into items too
+    const sentence = (s, pause) => {
+      const items = s.split(/\s*,\s*/);
+      if (items.length >= 3 && items.every(x => words(x) <= 3)) items.forEach((x, i) => push(x, i === items.length - 1 ? pause : A.PAUSE_ITEM));
+      else push(s, pause);
+    };
+    const re = /(\.{3,}|[.!?:](?=\s|$))\s*/g;
+    let last = 0, m;
+    while ((m = re.exec(t))) {
+      const ellipsis = m[1].charAt(0) === '.' && m[1].length >= 3;
+      const piece = t.slice(last, m.index) + (ellipsis || m[1] === ':' ? '' : m[1]);
+      sentence(piece, ellipsis ? A.PAUSE_ITEM : A.PAUSE_SENTENCE);
+      last = m.index + m[0].length;
+    }
+    if (last < t.length) sentence(t.slice(last), 0);
+    if (out.length) out[out.length - 1].pause = 0;
+    return out;
+  };
+
+  // Speak text; resolves when finished.
   A.say = function (raw) {
     const SS = window.speechSynthesis;
     const busy = !!(SS && (SS.speaking || SS.pending));
     A.stop();
     const my = token;
-    // '...' makes most voices stop dead for a long beat; a comma gives a natural, shorter breath
-    const text = raw ? String(raw).replace(/\s*\.{3,}\s*/g, ', ').replace(/,\s*([?!.])/g, '$1') : raw;
+    if (!raw) return Promise.resolve();
+    const parts = A.segments(raw);
+    if (!parts.length) return Promise.resolve();
+    speaking(true);
+    return (async () => {
+      // a breath between one instruction and the next (e.g. the game intro, then the question). Single words like
+      // the numbers said while she taps to count go out straight away.
+      const since = Date.now() - lastEnd;
+      const oneWord = parts.length === 1 && !/\s/.test(parts[0].text.trim());
+      if (since < A.PAUSE_SENTENCE && !oneWord) await new Promise(r => setTimeout(r, A.PAUSE_SENTENCE - since));
+      for (let i = 0; i < parts.length; i++) {
+        if (my !== token) return false;
+        await speakPart(parts[i].text, my, i === 0 && busy);
+        if (my !== token) return false;
+        if (parts[i].pause) await new Promise(r => setTimeout(r, parts[i].pause));
+      }
+      if (my === token) { clearTimers(); speaking(false); lastEnd = Date.now(); }
+      return my === token;
+    })();
+  };
+  let lastEnd = 0;
+
+  // One utterance. Resolves when it ends (or after a length-based safety net, because iOS sometimes drops onend).
+  function speakPart(text, my, afterCancel) {
+    const SS = window.speechSynthesis;
     return new Promise(resolve => {
-      if (!text) return resolve();
       let done = false, poll = null;
-      const finish = () => { if (!done) { done = true; clearInterval(poll); if (my === token) { clearTimers(); speaking(false); } resolve(my === token); } };
-      // safety net only: the end is normally detected by onend or by watching speechSynthesis.speaking below
+      const finish = () => { if (!done) { done = true; clearInterval(poll); clearTimeout(fallback); clearTimers(); resolve(); } };
       const fallback = setTimeout(finish, 1500 + text.length * 65 / A.rate);
       // words with their positions, for boundary events and for the timing estimate
       const words = []; const re = /[A-Za-z0-9']+/g; let m;
@@ -518,18 +569,17 @@ window.PA = window.PA || {};
       // Real word-boundary events where the voice provides them (Safari does); otherwise an estimate from the text.
       let gotBoundary = false, timeline = false, lastEmitted = -1;
       const startTimeline = () => {
-        if (gotBoundary || timeline || my !== token) return;
+        if (gotBoundary || timeline || my !== token || done) return;
         timeline = true;
         let t = 0;
         words.forEach((x, i) => {
-          timers.push(setTimeout(() => { if (!gotBoundary) { lastEmitted = i; emit(i); } }, t * 1000));
+          timers.push(setTimeout(() => { if (!gotBoundary && i > lastEmitted) { lastEmitted = i; emit(i); } }, t * 1000));
           const after = text.slice(x.end, (words[i + 1] || { at: text.length }).at);
           t += (0.13 + 0.058 * x.w.length) / A.rate;
           if (/[.!?]/.test(after)) t += 0.38 / A.rate; else if (/[,;:]/.test(after)) t += 0.2 / A.rate;
         });
       };
-      speaking(true);
-      if (!window.speechSynthesis) { startTimeline(); return; }
+      if (!SS) { startTimeline(); return; }
       try {
         const u = new SpeechSynthesisUtterance(text);
         // re-check every time: iPads don't announce newly downloaded voices, and a home-screen app can stay open for days
@@ -545,27 +595,26 @@ window.PA = window.PA || {};
           if (i < 0) i = words.findIndex(x => x.at >= e.charIndex);
           if (i > lastEmitted) { lastEmitted = i; emit(i); }
         };
-        u.onend = () => { clearTimeout(fallback); setTimeout(finish, 30); };
-        u.onerror = () => { clearTimeout(fallback); finish(); };
+        u.onend = () => setTimeout(finish, 20);
+        u.onerror = () => finish();
+        A._u = u; // keep a reference: Safari can garbage-collect an utterance mid-sentence and skip its onend
         // iOS: a cancel() immediately followed by speak() is sometimes swallowed; a tick of delay fixes it.
-        // Only needed after interrupting speech, so a fresh sentence starts right away.
         setTimeout(() => {
           if (my !== token) return finish();
           SS.speak(u);
-          // iOS sometimes never fires onend, which used to leave a long silent hold before the next line.
-          // Watch the engine instead: once it has spoken and gone quiet, carry straight on.
+          // iOS sometimes never fires onend; watch the engine instead: once it has spoken and gone quiet, carry on.
           let heard = false; const t0 = Date.now();
           poll = setInterval(() => {
             if (my !== token) return finish();
             if (SS.speaking) heard = true;
-            else if ((heard || Date.now() - t0 > 2500) && !SS.pending) { clearTimeout(fallback); finish(); }
-          }, 120);
-        }, busy ? 60 : 0);
+            else if ((heard || Date.now() - t0 > 2500) && !SS.pending) finish();
+          }, 100);
+        }, afterCancel ? 60 : 0);
         // no voice at all (or onstart never fires): still light things up on the estimated timing
         timers.push(setTimeout(startTimeline, 900));
       } catch (e) { finish(); }
     });
-  };
+  }
 
   function tone(freq, start, dur, type, vol) {
     const o = ctx.createOscillator(); const g = ctx.createGain();
