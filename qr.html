@@ -31,7 +31,7 @@
   <div class="sub">Point your phone or iPad camera here</div>
   <div class="qr" id="qr"></div>
   <div class="url" id="url"></div>
-  <div class="steps">Your phone or iPad must be on the same Wi-Fi as this computer. Tap the link that pops up, then tap <b>Play</b>.<br>
+  <div class="steps">Tap the link that pops up, then tap <b>Play</b>. (A "Home Wi-Fi" code only works on the same Wi-Fi while this computer runs the game.)<br>
     To keep it as an app: Share, then <i>Add to Home Screen</i>.</div>
   <div class="others" id="others"></div>
   <div class="others">No Wi-Fi? <a href="princess-academy.html" download="princess-academy.html">Download the game as one file</a> (runs in any web browser on a computer or Android tablet, no internet needed).</div>
@@ -44,20 +44,24 @@
     q.addData(url); q.make();
     box.innerHTML = q.createSvgTag({ cellSize: 8, margin: 2, scalable: true });
   }
+  // The website works anywhere (no computer needed, and offline once opened), so it's the default code.
+  // Opened from this PC's own server, the home Wi-Fi addresses are offered as alternatives.
+  var SITE = 'https://ironmanappraisals.github.io/princess-academy/';
+  var here = new URL('./', location.href).href;
   var local = /^(localhost|127\.|\[::1\])/.test(location.hostname);
-  if (!local) draw(location.origin + '/');
-  else fetch('lan.json').then(function (r) { return r.json(); }).then(function (list) {
-    if (!list.length) { draw(location.origin + '/'); document.getElementById('others').innerHTML = '<span class="err">This computer has no Wi-Fi address right now.</span>'; return; }
+  if (!local) draw(here);
+  else fetch('lan.json').then(function (r) { return r.json(); }).then(function (lan) {
+    var list = [{ url: SITE, name: 'website' }].concat(lan);
     draw(list[0].url);
     if (list.length > 1) {
       var o = document.getElementById('others');
       o.appendChild(document.createTextNode('Not working? Try: '));
       list.forEach(function (u) {
-        var b = document.createElement('button'); b.textContent = u.url.replace('http://', '').replace(/\/$/, '');
+        var b = document.createElement('button'); b.textContent = u.name === 'website' ? 'Website' : 'Home Wi-Fi ' + u.url.replace('http://', '').replace(/\/$/, '');
         b.onclick = function () { draw(u.url); }; o.appendChild(b);
       });
     }
-  }).catch(function () { draw(location.origin + '/'); });
+  }).catch(function () { draw(SITE); });
 </script>
 </body>
 </html>

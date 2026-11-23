@@ -3080,8 +3080,9 @@ window.PA = window.PA || {};
       share.innerHTML = `<h3>This is the one-file copy</h3><p class="muted">It runs without the computer or the internet (the voice and pictures come from the device). Progress is saved in this browser on this device only.</p>`;
     } else {
       share.innerHTML = `<h3>Other phones and tablets</h3><ul>
-        <li><b>Scan to play:</b> open the QR code on this screen and point the other phone or tablet's camera at it. Both must be on the same Wi-Fi, and the computer running the game must stay on.</li>
-        <li><b>Download as one file:</b> the whole game in a single <i>princess-academy.html</i> file that works with no computer and no internet. Open it in a web browser on a computer or an Android tablet. (iPhone and iPad won't run games from the Files app; for those, put the game on a website instead.)</li>
+        <li><b>The website:</b> <a href="https://ironmanappraisals.github.io/princess-academy/" target="_blank" rel="noopener">ironmanappraisals.github.io/princess-academy</a> works on any phone or tablet, with no computer needed. Open it once in Safari and Add to Home Screen; after that it works offline too. Progress is saved separately on each device.</li>
+        <li><b>Scan to play:</b> open the QR code and point the other device's camera at it. It goes to the website.</li>
+        <li><b>Download as one file:</b> the whole game in a single <i>princess-academy.html</i> file for a computer or Android tablet with no internet. (iPhone and iPad won't run games from the Files app; use the website.)</li>
       </ul>
       <div class="row-btns"><a class="btn small purple" href="qr.html" target="_blank" rel="noopener">Show QR code</a>
       <a class="btn small" href="princess-academy.html" download="princess-academy.html">Download as one file</a></div>`;
@@ -3110,7 +3111,7 @@ window.PA = window.PA || {};
     // iPad tips
     const tips = U.el('div', 'panel');
     tips.innerHTML = `<h3>iPad setup</h3><ul>
-      <li><b>Make it an app:</b> in Safari tap Share, then <i>Add to Home Screen</i>. It opens full-screen without the address bar.</li>
+      <li><b>Make it an app:</b> open the website in Safari, tap Share, then <i>Add to Home Screen</i>. It opens full-screen without the address bar, and keeps working with no internet once it has loaded.</li>
       <li><b>Lock her in:</b> Settings, Accessibility, Guided Access: on, with a passcode. Open Princess Academy and triple-click the Home button. Triple-click again with your passcode to get out.</li>
       <li><b>Keep the web safe:</b> Settings, Screen Time, Content &amp; Privacy Restrictions, Content Restrictions, Web Content: <i>Allowed Websites Only</i>, and add this site.</li>
       <li><b>No sound?</b> Check the side switch and volume. The iPad's mute switch also silences web audio.</li>
