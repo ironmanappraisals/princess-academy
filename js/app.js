@@ -39,7 +39,8 @@ window.PA = window.PA || {};
     PA.games.forEach(g => {
       const rec = S.game(g.id);
       const t = U.el('button', 'tile');
-      t.innerHTML = `<div class="ico emoji" style="background:${g.color}">${g.icon}</div><div class="name">${g.name}</div>
+      const th = U.THEMES[g.id];
+      t.innerHTML = `<div class="ico emoji" style="background:${th ? th.bg : g.color}">${g.icon}</div>${th ? `<span class="tale emoji">${th.prop}</span>` : ''}<div class="name">${g.name}</div>
         <div class="lvl"><i style="width:${Math.round(100 * Math.min(rec.level, g.maxLevel) / g.maxLevel)}%"></i></div>`;
       t.setAttribute('aria-label', g.name);
       t.onclick = () => { A.sfx('tap'); if (S.timeUp()) U.rest(); else U.runGame(g); };
@@ -66,32 +67,48 @@ window.PA = window.PA || {};
     const wrap = U.el('div', 'maker');
     const preview = U.el('div', '', PA.art.princess(p, 'happy'));
     const opts = U.el('div', 'opts');
-    const rows = [['👗', 'dress', PA.art.DRESS, 'Pick a dress color!'], ['💇‍♀️', 'hair', PA.art.HAIR, 'Pick a hair color!'], ['✋', 'skin', PA.art.SKIN, 'Pick a skin color!']];
-    rows.forEach(([icon, key, colors, line]) => {
-      const r = U.el('div', 'opt-row', `<div class="lab emoji">${icon}</div>`);
-      U.tag(r.querySelector('.lab'), key);
+    // one button per thing she can colour; its colours appear underneath (a "none" swatch for the extras)
+    const ITEMS = [['👗', 'dress', PA.art.DRESS, 'her dress'], ['💇‍♀️', 'hair', PA.art.HAIR, 'her hair'], ['✋', 'skin', PA.art.SKIN, 'her skin'],
+      ['👑', 'crown', PA.art.CROWN, 'her crown'], ['👀', 'eyes', PA.art.EYES, 'her eyes'], ['🎀', 'bow', PA.art.BOW, 'a hair bow'],
+      ['📿', 'neck', PA.art.NECK, 'a necklace'], ['🪄', 'wand', PA.art.WAND, 'a magic wand']];
+    const tabs = U.el('div', 'item-tabs'), swatches = U.el('div', 'opt-row');
+    let cur = 0;
+    const showItem = (n, speak) => {
+      cur = n;
+      const [, key, colors, what] = ITEMS[n];
+      tabs.querySelectorAll('.item-tab').forEach((t, i) => t.classList.toggle('on', i === n));
+      swatches.innerHTML = '';
       colors.forEach((c, i) => {
-        const sw = U.el('button', 'swatch' + (p[key] === i ? ' on' : ''));
-        sw.style.background = c;
+        const sw = U.el('button', 'swatch' + ((p[key] || 0) === i ? ' on' : '') + (c ? '' : ' none'), c ? '' : '✕');
+        if (c) sw.style.background = c;
+        sw.setAttribute('aria-label', c ? 'colour ' + (i + 1) : 'none');
         sw.onclick = () => {
           p[key] = i; S.save(); A.sfx('tap');
-          r.querySelectorAll('.swatch').forEach(x => x.classList.remove('on')); sw.classList.add('on');
+          swatches.querySelectorAll('.swatch').forEach(x => x.classList.remove('on')); sw.classList.add('on');
           preview.innerHTML = PA.art.princess(p, 'wow');
-          if (Math.random() < 0.35) A.say(U.pick(['Pretty!', 'Beautiful!', 'Ooh, lovely!']));
+          if (Math.random() < 0.35) A.say(c ? U.pick(['Pretty!', 'Beautiful!', 'Ooh, lovely!']) : 'No ' + what.replace(/^(her|a) /, '') + '.');
         };
-        r.appendChild(sw);
+        swatches.appendChild(sw);
       });
-      r.querySelector('.lab').onclick = () => A.say(line);
-      opts.appendChild(r);
+      if (speak) A.say(`Pick a color for ${what}!`);
+    };
+    ITEMS.forEach(([icon, key], i) => {
+      const t = U.el('button', 'item-tab emoji', icon);
+      t.setAttribute('aria-label', key);
+      U.tag(t, key);
+      t.onclick = () => { A.sfx('tap'); showItem(i, true); };
+      tabs.appendChild(t);
     });
+    showItem(0, false);
+    opts.append(tabs, swatches);
     wrap.append(preview, opts);
     s.append(top, wrap);
     U.show(s);
     const finish = () => { p.made = true; S.save(); A.sfx('sparkle'); app.home(true); };
     done.onclick = finish;
     back.onclick = finish;
-    A.say(first ? 'Hello! Let\'s make your princess. Pick her dress, her hair, and her skin color. Then tap the green button.'
-      : 'Change your princess! Tap the colors.');
+    A.say(first ? 'Hello! Let\'s make your princess. Tap a button on top, like the dress or the crown, then pick a color. When you are done, tap the green button.'
+      : 'Change your princess! Tap a button on top, then pick a color.');
   };
 
   // ---------- sticker book ----------
@@ -257,6 +274,7 @@ window.PA = window.PA || {};
         <li><b>Effort praise.</b> "You counted carefully," not "you're so smart". Praising effort builds persistence (Mueller &amp; Dweck, 1998; Gunderson et al., 2013).</li>
         <li><b>Made for pre-readers.</b> Everything is spoken, with a 🔊 repeat button on every question. Whatever the voice names lights up as it's said (each gem as it's counted, each bead as a pattern is read), linking the spoken word to the thing. Answers never light up before she's chosen.</li>
         <li><b>Clear next step.</b> The button to press next (Play, Done, the spinner) glows gently.</li>
+        <li><b>Story worlds.</b> Each game is set in a different fairy tale (an ice palace, a rose castle, a lantern tower, a midnight ball, under the sea and more), and her own princess wears that story's colours there. The pictures are original, with no film characters.</li>
         <li><b>A steady climb.</b> On top of the levels, every round makes that game 2.5% harder, so it keeps stretching her even between level-ups.</li>
         <li><b>Calm.</b> Rounds are 10 questions (adjustable) with a sticker at the end. No ads, no purchases, no streaks, and a daily time limit. Paediatric advice for ages 2-5 is about an hour of quality screen time a day, best shared with a grown-up.</li>
       </ul>

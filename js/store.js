@@ -9,7 +9,7 @@ window.PA = window.PA || {};
   const S = PA.store = {};
 
   const blank = () => ({
-    profile: { made: false, skin: 1, hair: 0, dress: 0, name: '' },
+    profile: { made: false, skin: 1, hair: 0, dress: 0, name: '', crown: 0, eyes: 0, bow: 0, neck: 0, wand: 0 },
     settings: { limitMin: 20, rate: 0.9, sfx: true, roundLen: 10, voice: '' },
     games: {},
     stickers: [],
@@ -22,6 +22,7 @@ window.PA = window.PA || {};
   const b = blank();
   for (const k in b) if (!(k in state)) state[k] = b[k];
   for (const k in b.settings) if (!(k in state.settings)) state.settings[k] = b.settings[k];
+  for (const k in b.profile) if (!(k in state.profile)) state.profile[k] = b.profile[k];
 
   S.state = state;
   S.save = function () { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { } };

@@ -94,14 +94,14 @@ input, select { font: inherit; }
 .home-princess { width: 12.5rem; flex: none; display: flex; flex-direction: column; align-items: center; }
 .home-princess svg { width: 11.9rem; height: 14.4rem; }
 .home-princess .hello { font-size: 1.4rem; font-weight: 700; text-align: center; color: var(--ink); background: #fff; border-radius: 1.25rem; padding: .4rem .9rem; box-shadow: var(--shadow); margin-bottom: .4rem; }
-.tiles { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; align-content: center; }
+.tiles { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem; align-content: center; }
 .tile {
   position: relative; background: #fff; border-radius: 1.9rem; box-shadow: var(--shadow);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: .9rem .4rem .75rem; min-height: 10rem;
+  padding: .6rem .4rem .6rem; min-height: 9.4rem;
 }
 .tile:active { transform: translateY(.25rem); }
-.tile .ico { font-size: 4rem; width: 6rem; height: 6rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.tile .ico { font-size: 3.6rem; width: 5.4rem; height: 5.4rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .tile .name { font-size: 1.3rem; font-weight: 800; margin-top: .4rem; text-align: center; line-height: 1.05; }
 .tile .lvl { width: 70%; height: .5rem; border-radius: .25rem; background: #f3ecfa; margin-top: .45rem; overflow: hidden; }
 .tile .lvl i { display: block; height: 100%; background: var(--gold); border-radius: .25rem; }
@@ -391,6 +391,111 @@ input, select { font: inherit; }
 .parent .row-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
 .parent .row-btns .btn { text-decoration: none; color: #fff; font-family: system-ui, sans-serif; font-size: 16px; min-height: 44px; padding: 0 18px; }
 
+/* ---------- fairy-tale themes ---------- */
+.screen.themed > .topbar, .screen.themed > .play { position: relative; z-index: 1; }
+.deco { position: absolute; top: 0; right: 0; bottom: 0; left: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.deco span { position: absolute; font-size: 2.6rem; opacity: .38; transform: translate(-50%, -50%); animation: drift 6s ease-in-out infinite; }
+@keyframes drift { 0%, 100% { margin-top: 0; } 50% { margin-top: -.9rem; } }
+.guide { z-index: 1; }
+.guide .prop { position: absolute; right: -.9rem; bottom: 1.6rem; font-size: 2.4rem; animation: drift 3s ease-in-out infinite; }
+@media (orientation: portrait) { .guide .prop { font-size: 1.8rem; right: -.6rem; bottom: 1rem; } }
+.tile .tale { position: absolute; top: .45rem; right: .6rem; font-size: 1.7rem; }
+
+/* ---------- mermaid colours ---------- */
+.sea { position: relative; width: 52rem; max-width: 100%; height: 10.5rem; border-radius: 1.9rem; overflow: hidden; flex: none;
+  background: linear-gradient(180deg, #8fe0ff 0%, #3fa6e6 70%, #2a86cf 100%); box-shadow: var(--shadow); }
+.sea .waves { position: absolute; left: 0; right: 0; top: 0; height: 1.2rem; background: radial-gradient(circle at 1rem -.3rem, transparent .9rem, rgba(255, 255, 255, .55) .95rem) 0 0 / 2rem 1.2rem repeat-x; animation: waves 3s linear infinite; }
+@keyframes waves { to { background-position: 2rem 0; } }
+.sea .beach { position: absolute; right: -2rem; top: 0; bottom: 0; width: 17%; background: linear-gradient(180deg, #ffe9a8, #f5cf73); border-radius: 50% 0 0 50% / 60% 0 0 40%; }
+.sea .palm { position: absolute; left: 18%; top: .4rem; font-size: 3.6rem; }
+.sea .hut { position: absolute; left: 22%; bottom: .5rem; font-size: 2.4rem; }
+.sea .bub { position: absolute; color: rgba(255, 255, 255, .75); font-family: var(--ui-font); font-size: 1.4rem; animation: rise 4s linear infinite; }
+.sea .b1 { left: 20%; animation-delay: 0s; } .sea .b2 { left: 45%; animation-delay: 1.4s; } .sea .b3 { left: 63%; animation-delay: 2.6s; }
+@keyframes rise { from { top: 100%; opacity: 0; } 20% { opacity: 1; } to { top: 5%; opacity: 0; } }
+.sea .mer { position: absolute; top: 50%; width: 9.4rem; height: 5.8rem; margin-top: -3rem; transition: left 1.1s ease-in-out; z-index: 2; }
+.sea .shark { position: absolute; top: 50%; width: 9.4rem; height: 5rem; margin-top: -2.2rem; transition: left 1.3s ease-in-out; z-index: 1; animation: sharkBob 1.6s ease-in-out infinite; }
+.sea .mer svg, .sea .shark svg { width: 100%; height: 100%; }
+.sea .mer.swim svg { animation: swim .6s ease-in-out 2; }
+@keyframes swim { 50% { transform: translateY(-.4rem) rotate(-4deg); } }
+@keyframes sharkBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(.35rem); } }
+.sea .shark.snap svg { animation: snap .5s ease-in-out 2; }
+@keyframes snap { 50% { transform: scale(1.08) rotate(3deg); } }
+.sea .shark.away { transform: scaleX(-1); animation: none; }
+.sea.big { height: 22rem; }
+.sea.big .mer { width: 15rem; height: 9.2rem; margin-top: -4.6rem; }
+.sea.big .shark { width: 13rem; height: 7rem; }
+.sea.big .beach { width: 38%; }
+.sea.big .palm { font-size: 6rem; left: auto; right: 2.6rem; top: .2rem; } .sea.big .hut { display: none; }
+.sea .mer.human { top: auto; bottom: .6rem; margin-top: 0; width: 8rem; height: 9.6rem; left: 80% !important; animation: pop .6s; }
+.sea.big .mer.human { width: 12rem; height: 14.4rem; left: 66% !important; }
+.sea .mer.human svg { width: 100%; height: 100%; }
+.magic { position: absolute; left: 30%; top: -20%; font-size: 5rem; animation: magic 1s ease-out forwards; }
+@keyframes magic { from { transform: scale(.3) rotate(0); opacity: 0; } 50% { opacity: 1; } to { transform: scale(2.4) rotate(180deg); opacity: 0; } }
+.sea-choice { width: 9rem; height: 9rem; padding: .9rem; }
+.sea-choice svg, .paint-choice svg { width: 100%; height: 100%; }
+.paint-choice { width: 8.5rem; height: 8.5rem; padding: .8rem; }
+.mixrow { flex-direction: row; gap: .6rem; padding: .6rem 1.4rem; }
+.mixrow .paint { width: 5.6rem; height: 5.6rem; position: relative; }
+.mixrow .paint svg { width: 100%; height: 100%; }
+.mixrow .ask b { position: absolute; left: 0; right: 0; top: 38%; text-align: center; font-size: 2.2rem; color: #fff; font-weight: 800; }
+.mixrow .ask.filled { animation: pop .45s; }
+.mixrow .plus { font-size: 2.8rem; }
+.rainbow { padding: .5rem 1.4rem .2rem; background: #eef8ff; }
+.rainbow svg { width: 22rem; height: 11.7rem; overflow: visible; }
+.homes { display: flex; flex-direction: row; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.sea-home { position: relative; width: 8.6rem; height: 8.6rem; display: flex; align-items: center; justify-content: center; }
+.sea-home > svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.sea-home.hint { animation: glow 1s ease-in-out infinite; border-radius: 1.4rem; }
+.pairhome { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #fff; border-radius: 1.4rem; box-shadow: var(--shadow); border: .25rem dashed #9cc7ff; display: flex; align-items: center; justify-content: center; gap: .1rem; padding: .3rem; }
+.pairhome svg { width: 3.4rem; height: 3.4rem; }
+.pairhome b { font-size: 1.6rem; }
+.loose { display: flex; flex-direction: row; gap: 1rem; justify-content: center; flex-wrap: wrap; min-height: 7.6rem; }
+.sea-item { width: 7.2rem; height: 7.2rem; padding: .6rem; touch-action: none; cursor: grab; position: relative; z-index: 3; }
+.sea-item svg { width: 100%; height: 100%; pointer-events: none; }
+.sea-item.sel { box-shadow: 0 0 0 .4rem var(--gold), var(--shadow); }
+.sea-item.dragging { z-index: 9; transition: none; box-shadow: 0 .8rem 1.6rem rgba(90, 40, 120, .3); }
+.sea-item.shake { animation: shake .35s; }
+.sea-item.hint { animation: glow 1s ease-in-out infinite; }
+.sea-item.placed { position: absolute; width: 64%; height: 64%; bottom: 3%; left: 18%; padding: .5rem; background: rgba(255, 255, 255, .92); border-radius: 50%; box-shadow: 0 .2rem .5rem rgba(0, 0, 0, .15); animation: pop .45s; z-index: 2; }
+.goal, .bowl { width: 8.6rem; height: 8.6rem; padding: .8rem; }
+.goal svg, .bowl svg { width: 100%; height: 100%; }
+.bowl.pop { animation: pop .45s; }
+.potc { width: 8rem; height: 8rem; padding: .5rem; }
+.potc svg { width: 100%; height: 100%; }
+.potc.picked { box-shadow: 0 0 0 .4rem var(--gold), var(--shadow); transform: translateY(-.4rem); }
+@media (orientation: portrait) {
+  .sea { height: 9rem; }
+  .sea .mer { width: 7.5rem; height: 4.7rem; margin-top: -2.4rem; }
+  .sea .shark { width: 7.5rem; height: 4rem; margin-top: -1.8rem; }
+  .sea-choice { width: 7.4rem; height: 7.4rem; }
+  .paint-choice { width: 7rem; height: 7rem; }
+}
+
+/* ---------- magic writing ---------- */
+.trace-card { padding: .6rem 1rem; max-width: 100%; }
+.trace-svg { display: block; touch-action: none; overflow: visible; }
+.tr-line { stroke: #d9c7f0; stroke-width: 1.2; }
+.tr-line.mid { stroke-dasharray: 4 4; }
+.tr-line.base { stroke: #b99be0; stroke-width: 1.6; }
+.tr-track { fill: none; stroke: #f1e4ff; stroke-linecap: round; stroke-linejoin: round; }
+.tr-track.done { stroke: #ffe8f4; }
+.tr-dots { fill: none; stroke: #c7a6ee; stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: .1 6.5; }
+.tr-ink { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.tr-start { fill: #2fcf87; stroke: #fff; stroke-width: 2; animation: startPulse 1.1s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes startPulse { 50% { transform: scale(1.25); } }
+.tr-arrow { fill: #2fcf87; opacity: .8; }
+.tr-star { fill: #ffc93c; stroke: #e0a100; stroke-width: 1.2; stroke-linejoin: round; }
+.tr-demo { fill: none; stroke: #ffc93c; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
+.word-pic { min-height: 7rem; min-width: 8rem; padding: .4rem 1rem; }
+.word-pic .emoji { font-size: 5rem; }
+
+/* ---------- princess maker: item buttons ---------- */
+.item-tabs { display: grid; grid-template-columns: repeat(4, 5.2rem); gap: .7rem; margin-bottom: .6rem; }
+.item-tab { width: 5.2rem; height: 5.2rem; border-radius: 1.4rem; background: #fff; box-shadow: var(--shadow); font-size: 2.7rem; display: flex; align-items: center; justify-content: center; }
+.item-tab.on { box-shadow: 0 0 0 .35rem var(--pink), var(--shadow); transform: scale(1.06); }
+.maker .opt-row { max-width: 24rem; gap: .7rem; }
+.swatch.none { background: #fff; color: #c0aacf; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+
 </style>
 </head>
 <body>
@@ -654,7 +759,7 @@ window.PA = window.PA || {};
   const S = PA.store = {};
 
   const blank = () => ({
-    profile: { made: false, skin: 1, hair: 0, dress: 0, name: '' },
+    profile: { made: false, skin: 1, hair: 0, dress: 0, name: '', crown: 0, eyes: 0, bow: 0, neck: 0, wand: 0 },
     settings: { limitMin: 20, rate: 0.9, sfx: true, roundLen: 10, voice: '' },
     games: {},
     stickers: [],
@@ -667,6 +772,7 @@ window.PA = window.PA || {};
   const b = blank();
   for (const k in b) if (!(k in state)) state[k] = b[k];
   for (const k in b.settings) if (!(k in state.settings)) state.settings[k] = b.settings[k];
+  for (const k in b.profile) if (!(k in state.profile)) state.profile[k] = b.profile[k];
 
   S.state = state;
   S.save = function () { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { } };
@@ -754,14 +860,21 @@ window.PA = window.PA || {};
 </script>
 <script>/* js/art.js */
 'use strict';
-// Original princess artwork (inline SVG), built from the child's choices of skin, hair and dress colour.
-// Letting her design "her" princess makes the guide personal, which is part of making the app meaningful to her.
+// Original princess artwork (inline SVG), built from the child's choices: skin, hair, dress, crown, eyes, bow,
+// necklace and wand. Letting her design "her" princess makes the guide personal, which is part of making the app
+// meaningful to her. In each game she wears that game's fairy-tale outfit colour (p.dressColor overrides the dress).
 window.PA = window.PA || {};
 (function () {
   const art = PA.art = {};
   art.SKIN = ['#ffe3cc', '#f5c7a1', '#dca47a', '#ad7048', '#734a2e'];
   art.HAIR = ['#4a2c1a', '#f4cf57', '#c4562b', '#1f1a1a', '#9a6a3c', '#ff8fc8', '#9b6bff'];
   art.DRESS = ['#ff6fae', '#a77bff', '#5fb8ff', '#ffcc33', '#41cf9b', '#ff8a5c'];
+  art.CROWN = ['#ffd54a', '#e3e7ef', '#ffb3c7', '#c9a7ff', '#9fd8ff', '#7fe0b8'];
+  art.EYES = ['#3a2340', '#7a4a24', '#2f7fe8', '#2f9e5a', '#9a7a3a', '#8a5cf6'];
+  // index 0 = none
+  art.BOW = [null, '#ff6fae', '#5fb8ff', '#ffcc33', '#41cf9b', '#a77bff', '#ff5a5a'];
+  art.NECK = [null, '#ff6fae', '#5fb8ff', '#41cf9b', '#a77bff', '#ffffff'];
+  art.WAND = [null, '#ffd54a', '#ff8fc8', '#9fd8ff', '#c9a7ff', '#7fe0b8'];
 
   function shade(hex, amt) {
     const n = parseInt(hex.slice(1), 16);
@@ -771,13 +884,39 @@ window.PA = window.PA || {};
     return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
   }
   art.shade = shade;
+  art.starPath = function (cx, cy, R, r, n) {
+    n = n || 5; let d = '';
+    for (let i = 0; i < n * 2; i++) {
+      const a = -Math.PI / 2 + i * Math.PI / n, rad = i % 2 ? r : R;
+      d += (i ? 'L' : 'M') + (cx + rad * Math.cos(a)).toFixed(1) + ' ' + (cy + rad * Math.sin(a)).toFixed(1) + ' ';
+    }
+    return d + 'Z';
+  };
+  const look = p => {
+    p = p || PA.store.state.profile;
+    return {
+      skin: art.SKIN[p.skin] || art.SKIN[1], hair: art.HAIR[p.hair] || art.HAIR[0],
+      dress: p.dressColor || art.DRESS[p.dress] || art.DRESS[0],
+      crown: art.CROWN[p.crown] || art.CROWN[0], eyes: art.EYES[p.eyes] || art.EYES[0],
+      bow: art.BOW[p.bow] || null, neck: art.NECK[p.neck] || null, wand: art.WAND[p.wand] || null
+    };
+  };
+  art.look = look;
+  const crownSvg = (c, x, y, s) => `<g transform="translate(${x} ${y}) scale(${s})">
+      <path d="M-30 12 L-24 -14 L-11 2 L0 -22 L11 2 L24 -14 L30 12 Q0 4 -30 12 Z" fill="${c}" stroke="${shade(c, -0.3)}" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="0" cy="0" r="5" fill="#ff6fae"/><circle cx="-17" cy="6" r="3.5" fill="#5fb8ff"/><circle cx="17" cy="6" r="3.5" fill="#41cf9b"/></g>`;
+  const bowSvg = (c, x, y, rot) => c ? `<g transform="translate(${x} ${y}) rotate(${rot})">
+      <path d="M0 0 L-15 -11 Q-19 0 -15 11 Z" fill="${c}" stroke="${shade(c, -0.25)}" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M0 0 L15 -11 Q19 0 15 11 Z" fill="${c}" stroke="${shade(c, -0.25)}" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle r="4.5" fill="${shade(c, -0.15)}"/></g>` : '';
+  const eyeSvg = (cx, cy, ry, c) => `<ellipse cx="${cx}" cy="${cy}" rx="6" ry="${ry}" fill="${c}"/>
+      <ellipse cx="${cx}" cy="${cy + 1}" rx="3.2" ry="${ry - 3.2}" fill="#241626"/>
+      <circle cx="${cx + 2}" cy="${cy - 3}" r="2.4" fill="#fff"/>`;
 
   // mood: 'happy' | 'wow' | 'sleep'
   art.princess = function (p, mood) {
-    p = p || PA.store.state.profile;
-    const skin = art.SKIN[p.skin] || art.SKIN[1];
-    const hair = art.HAIR[p.hair] || art.HAIR[0];
-    const dress = art.DRESS[p.dress] || art.DRESS[0];
+    const L = look(p);
+    const { skin, hair, dress } = L;
     const dressHi = shade(dress, 0.35), dressLo = shade(dress, -0.15), hairLo = shade(hair, -0.2);
     let eyes, mouth;
     if (mood === 'sleep') {
@@ -785,13 +924,18 @@ window.PA = window.PA || {};
       mouth = '<path d="M94 112 Q100 116 106 112" stroke="#b5476e" stroke-width="3" fill="none" stroke-linecap="round"/>';
     } else {
       const ry = mood === 'wow' ? 9 : 7.5;
-      eyes = `<ellipse cx="84" cy="93" rx="6" ry="${ry}" fill="#3a2340"/><ellipse cx="116" cy="93" rx="6" ry="${ry}" fill="#3a2340"/>
-        <circle cx="86" cy="90" r="2.4" fill="#fff"/><circle cx="118" cy="90" r="2.4" fill="#fff"/>
-        <path d="M76 84 L73 80 M80 82 L79 77 M124 84 L127 80 M120 82 L121 77" stroke="#3a2340" stroke-width="2" stroke-linecap="round"/>`;
+      eyes = eyeSvg(84, 93, ry, L.eyes) + eyeSvg(116, 93, ry, L.eyes) +
+        '<path d="M76 84 L73 80 M80 82 L79 77 M124 84 L127 80 M120 82 L121 77" stroke="#3a2340" stroke-width="2" stroke-linecap="round"/>';
       mouth = mood === 'wow'
         ? '<ellipse cx="100" cy="114" rx="7" ry="8" fill="#b5476e"/><ellipse cx="100" cy="117" rx="4" ry="3" fill="#ff8fb0"/>'
         : '<path d="M88 108 Q100 122 112 108 Z" fill="#b5476e"/><path d="M93 112 Q100 117 107 112" fill="#ff8fb0"/>';
     }
+    const pearl = L.neck === '#ffffff';
+    const neck = L.neck ? `<path d="M90 127 Q100 139 110 127" stroke="${pearl ? '#f4f0fa' : shade(L.neck, 0.3)}" stroke-width="4.5" fill="none" stroke-dasharray="0.1 5.2" stroke-linecap="round"/>
+      <path d="M100 132 L105 138 L100 145 L95 138 Z" fill="${L.neck}" stroke="${pearl ? '#c9c2d8' : shade(L.neck, -0.3)}" stroke-width="1.5" stroke-linejoin="round"/>` : '';
+    const wand = L.wand ? `<path d="M137 197 L158 150" stroke="#8a5cf6" stroke-width="4.5" stroke-linecap="round"/>
+      <path d="${art.starPath(160, 145, 13, 5.5)}" fill="${L.wand}" stroke="${shade(L.wand, -0.3)}" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="171" cy="131" r="2" fill="${L.wand}"/><circle cx="147" cy="131" r="1.6" fill="${L.wand}"/>` : '';
     return `<svg class="pr" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M48 96 Q44 40 100 36 Q156 40 152 96 L156 168 Q140 180 124 168 L120 120 L80 120 L76 168 Q60 180 44 168 Z" fill="${hair}"/>
       <path d="M100 134 Q76 136 70 150 Q50 200 40 232 Q100 244 160 232 Q150 200 130 150 Q124 136 100 134 Z" fill="${dress}"/>
@@ -804,29 +948,65 @@ window.PA = window.PA || {};
       <circle cx="72" cy="146" r="14" fill="${dressHi}"/><circle cx="128" cy="146" r="14" fill="${dressHi}"/>
       <path d="M86 138 Q100 146 114 138 L112 150 L88 150 Z" fill="${dressLo}"/>
       <rect x="92" y="118" width="16" height="22" rx="6" fill="${skin}"/>
+      ${neck}
       <circle cx="100" cy="90" r="44" fill="${skin}"/>
       <path d="M56 92 Q54 44 100 42 Q146 44 144 92 Q136 70 116 64 Q108 74 90 72 Q74 72 64 82 Z" fill="${hair}"/>
       <path d="M90 72 Q98 60 116 64" stroke="${hairLo}" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M70 52 L76 26 L89 42 L100 18 L111 42 L124 26 L130 52 Q100 44 70 52 Z" fill="#ffd54a" stroke="#f0b400" stroke-width="2" stroke-linejoin="round"/>
-      <circle cx="100" cy="40" r="5" fill="#ff6fae"/><circle cx="83" cy="46" r="3.5" fill="#5fb8ff"/><circle cx="117" cy="46" r="3.5" fill="#41cf9b"/>
+      ${crownSvg(L.crown, 100, 40, 1)}
+      ${bowSvg(L.bow, 141, 66, 25)}
       ${eyes}
       <circle cx="73" cy="106" r="7" fill="#ff8fb0" opacity=".45"/><circle cx="127" cy="106" r="7" fill="#ff8fb0" opacity=".45"/>
       ${mouth}
+      ${wand}
     </svg>`;
   };
 
   // Small head-only token for the board game.
   art.princessHead = function (p) {
-    p = p || PA.store.state.profile;
-    const skin = art.SKIN[p.skin] || art.SKIN[1];
-    const hair = art.HAIR[p.hair] || art.HAIR[0];
+    const L = look(p);
     return `<svg viewBox="40 14 120 120" width="100%" height="100%" aria-hidden="true">
-      <path d="M48 96 Q44 40 100 36 Q156 40 152 96 L152 128 L48 128 Z" fill="${hair}"/>
-      <circle cx="100" cy="90" r="44" fill="${skin}"/>
-      <path d="M56 92 Q54 44 100 42 Q146 44 144 92 Q136 70 116 64 Q108 74 90 72 Q74 72 64 82 Z" fill="${hair}"/>
-      <path d="M70 52 L76 26 L89 42 L100 18 L111 42 L124 26 L130 52 Q100 44 70 52 Z" fill="#ffd54a" stroke="#f0b400" stroke-width="2"/>
-      <ellipse cx="84" cy="93" rx="6" ry="7.5" fill="#3a2340"/><ellipse cx="116" cy="93" rx="6" ry="7.5" fill="#3a2340"/>
+      <path d="M48 96 Q44 40 100 36 Q156 40 152 96 L152 128 L48 128 Z" fill="${L.hair}"/>
+      <circle cx="100" cy="90" r="44" fill="${L.skin}"/>
+      <path d="M56 92 Q54 44 100 42 Q146 44 144 92 Q136 70 116 64 Q108 74 90 72 Q74 72 64 82 Z" fill="${L.hair}"/>
+      ${crownSvg(L.crown, 100, 40, 1)}${bowSvg(L.bow, 141, 66, 25)}
+      <ellipse cx="84" cy="93" rx="6" ry="7.5" fill="${L.eyes}"/><ellipse cx="116" cy="93" rx="6" ry="7.5" fill="${L.eyes}"/>
       <path d="M88 108 Q100 122 112 108 Z" fill="#b5476e"/>
+    </svg>`;
+  };
+
+  // Her princess as a mermaid, swimming to the right (tail in her dress colour).
+  art.mermaid = function (p, tailColor) {
+    const L = look(p);
+    const tail = tailColor || L.dress, tailHi = shade(tail, 0.35), tailLo = shade(tail, -0.2);
+    return `<svg viewBox="0 0 180 110" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M126 16 Q100 12 86 30 Q74 46 50 50 Q76 62 98 46 Q110 38 124 40 Z" fill="${L.hair}"/>
+      <path d="M40 62 Q14 32 6 42 Q16 58 6 78 Q16 88 40 68 Z" fill="${tailHi}" stroke="${tailLo}" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M36 60 Q70 44 106 56 L110 78 Q70 86 36 68 Z" fill="${tail}"/>
+      <path d="M58 56 q5 5 10 0 M74 54 q5 5 10 0 M90 56 q5 5 10 0 M66 66 q5 5 10 0 M82 66 q5 5 10 0" stroke="${tailHi}" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M100 68 Q102 48 118 46 Q134 48 132 66 Q128 78 108 78 Z" fill="${L.skin}"/>
+      <path d="M106 58 Q118 50 130 58 L129 65 Q118 60 107 65 Z" fill="${tailHi}"/>
+      <path d="M124 66 Q140 72 152 62" stroke="${L.skin}" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <circle cx="136" cy="30" r="20" fill="${L.skin}"/>
+      <path d="M116 32 Q114 8 138 9 Q158 11 156 28 Q146 16 132 20 Q124 26 116 32 Z" fill="${L.hair}"/>
+      ${crownSvg(L.crown, 138, 9, 0.5)}
+      ${eyeSvg(145, 30, 6, L.eyes)}
+      <path d="M141 40 Q148 46 154 39" stroke="#b5476e" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <circle cx="133" cy="38" r="4.5" fill="#ff8fb0" opacity=".5"/>
+    </svg>`;
+  };
+
+  // A grumpy-but-silly cartoon shark, swimming to the right.
+  art.shark = function () {
+    return `<svg viewBox="0 0 180 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M72 30 L86 4 L102 31 Z" fill="#7b8fa6"/>
+      <path d="M6 34 L28 46 Q62 18 112 26 Q154 32 172 52 Q156 70 112 72 Q62 74 28 58 L6 70 L16 52 Z" fill="#94a8be"/>
+      <path d="M30 56 Q84 72 166 54 Q152 70 112 72 Q62 74 30 58 Z" fill="#e6eef5"/>
+      <path d="M86 62 L96 84 L108 64 Z" fill="#7b8fa6"/>
+      <circle cx="140" cy="42" r="7" fill="#fff"/><circle cx="142" cy="43" r="3.4" fill="#22303d"/>
+      <path d="M131 32 L148 35" stroke="#4f6175" stroke-width="3" stroke-linecap="round"/>
+      <path d="M126 58 Q148 66 168 54" stroke="#4f6175" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M136 60 l3 5 l3 -4.5 M146 60.5 l3 4.5 l3 -5 M156 58.5 l2.6 4.2 l3 -5" stroke="#fff" stroke-width="2.4" fill="#fff" stroke-linejoin="round"/>
+      <path d="M60 44 Q64 40 68 44 M52 46 Q56 42 60 46" stroke="#7b8fa6" stroke-width="2" fill="none"/>
     </svg>`;
   };
 })();
@@ -957,13 +1137,47 @@ window.PA = window.PA || {};
   const RETRY = ['Hmm, not that one. Try again!', 'Almost! Have another look.', 'Oops! Let\'s try again.'];
   U.retry = () => U.pick(RETRY);
 
+  // ---------- fairy-tale themes: each game is a different story world (original pictures, no characters) ----------
+  // bg: the game screen; deco: little pictures floating round the edges; dress: the princess's outfit there;
+  // prop: something she holds.
+  U.THEMES = {
+    count: { tale: 'Ice palace', bg: 'linear-gradient(180deg,#e4f6ff 0%,#c8e6ff 55%,#f0fbff 100%)', deco: ['❄️', '💎', '❄️', '✨', '❄️', '⛄'], dress: '#8fd3ff', prop: '❄️' },
+    path: { tale: 'Rose castle', bg: 'linear-gradient(180deg,#fff4c9 0%,#ffdbe2 60%,#ffeccb 100%)', deco: ['🌹', '📚', '🕯️', '🌹', '🫖', '🌹'], dress: '#ffcc33', prop: '🌹' },
+    sounds: { tale: 'Lantern tower', bg: 'linear-gradient(180deg,#e9d9ff 0%,#ffdaef 60%,#ffeccc 100%)', deco: ['🏮', '🌸', '🏮', '☀️', '🦎', '🏮'], dress: '#a77bff', prop: '🏮' },
+    trace: { tale: 'Frog-prince pond', bg: 'linear-gradient(180deg,#e2fbe4 0%,#d4f2ff 60%,#fff2d8 100%)', deco: ['🐸', '🌿', '💧', '👑', '🐸', '🌿'], dress: '#78d38c', prop: '🐸' },
+    rhyme: { tale: 'Midnight ball', bg: 'linear-gradient(180deg,#d2e2ff 0%,#e8deff 55%,#d8f1ff 100%)', deco: ['🎃', '👠', '🕛', '✨', '🐭', '👠'], dress: '#a8d4ff', prop: '👠' },
+    pattern: { tale: 'Woodland cottage', bg: 'linear-gradient(180deg,#e4f7da 0%,#fff3cb 60%,#ffe3e3 100%)', deco: ['🍎', '🐦', '🍄', '🌳', '🐿️', '🍎'], dress: '#4f7dff', prop: '🍎' },
+    shapes: { tale: 'Desert palace', bg: 'linear-gradient(180deg,#ffe8c4 0%,#ffd3de 55%,#d2eaff 100%)', deco: ['🌙', '🐪', '⭐', '🕌', '🐯', '⭐'], dress: '#36c2b4', prop: '🪔' },
+    feelings: { tale: 'Sleeping castle', bg: 'linear-gradient(180deg,#ffe2f1 0%,#f4deff 60%,#e0f2ff 100%)', deco: ['🧚', '🌸', '🦋', '💤', '🧚', '🌸'], dress: '#ff8fc8', prop: '🧚' },
+    colours: { tale: 'Under the sea', bg: 'linear-gradient(180deg,#c4f1ff 0%,#8fd6f6 60%,#68bdea 100%)', deco: ['🐚', '🐠', '🐙', '🐬', '🦀', '🐚'], dress: '#36c98f', prop: '🐚' }
+  };
+  const DECO_AT = [[3, 14], [94, 12], [6, 52], [95, 50], [22, 90], [80, 92]];
+  U.deco = function (theme) {
+    const d = U.el('div', 'deco');
+    theme.deco.forEach((e, i) => {
+      const s = U.el('span', 'emoji', e);
+      s.style.left = DECO_AT[i % DECO_AT.length][0] + '%'; s.style.top = DECO_AT[i % DECO_AT.length][1] + '%';
+      s.style.animationDelay = (i * 0.7) + 's';
+      d.appendChild(s);
+    });
+    return d;
+  };
+  // her princess dressed for this game's story
+  U.themedPrincess = function (theme, mood) {
+    if (!theme) return PA.art.princess(null, mood);
+    return PA.art.princess(Object.assign({}, PA.store.state.profile, { dressColor: theme.dress }), mood) +
+      `<span class="prop emoji">${theme.prop}</span>`;
+  };
+
   const STICKERS = ['🦄', '🌈', '🌟', '🦋', '🌸', '🍰', '🎀', '👑', '💎', '🐚', '🧁', '🍓', '🐱', '🐰', '🦢', '🍭', '🎠', '🧚', '🌺', '🍩', '🐬', '🦩', '🌙', '🐞', '🐢', '🦊', '🐼', '🌻', '🍦', '🎈'];
 
   // ---------- the round runner ----------
   U.runGame = function (game) {
     const rec = PA.store.game(game.id);
     const level = Math.min(rec.level, game.maxLevel);
-    const screen = U.el('div', 'screen');
+    const screen = U.el('div', 'screen themed');
+    const theme = U.THEMES[game.id];
+    if (theme) { screen.style.background = theme.bg; screen.appendChild(U.deco(theme)); }
     const top = U.el('div', 'topbar');
     const homeBtn = U.el('button', 'icon-btn', '<span class="emoji">🏰</span>');
     homeBtn.setAttribute('aria-label', 'Back to the castle');
@@ -975,7 +1189,7 @@ window.PA = window.PA || {};
     const play = U.el('div', 'play');
     const stage = U.el('div', 'stage');
     const choices = U.el('div', 'choices');
-    const guide = U.el('div', 'guide', PA.art.princess(null, 'happy'));
+    const guide = U.el('div', 'guide', U.themedPrincess(theme, 'happy'));
     // fitbox holds the question; if a question is taller than the screen (e.g. a phone held sideways) it is
     // shrunk to fit, so nothing ever needs scrolling
     const fitbox = U.el('div', 'fitbox');
@@ -995,7 +1209,7 @@ window.PA = window.PA || {};
     let prompt = '';
     const c = PA.store.challenge(game.id);
     const api = {
-      game, level, screen, play, stage, choices, alive: true,
+      game, level, screen, play, stage, choices, guide, theme, alive: true,
       c, // 0..1 from the 2.5%-per-round ramp: games use it for bigger numbers, more choices, shorter peeks
       nOpts: (base, max) => Math.min(max, base + Math.floor(c * (max - base + 0.999))),
       name: name(),
@@ -1003,9 +1217,9 @@ window.PA = window.PA || {};
       setPrompt: text => { prompt = text; },
       prompt: text => { prompt = text; return api.say(text); },
       cheer: function () {
-        guide.innerHTML = PA.art.princess(null, 'wow');
+        guide.innerHTML = U.themedPrincess(theme, 'wow');
         guide.classList.remove('cheer'); void guide.offsetWidth; guide.classList.add('cheer');
-        setTimeout(() => { if (api.alive) guide.innerHTML = PA.art.princess(null, 'happy'); }, 1100);
+        setTimeout(() => { if (api.alive) guide.innerHTML = U.themedPrincess(theme, 'happy'); }, 1100);
       },
       clear: () => {
         stage.innerHTML = ''; choices.innerHTML = '';
@@ -1042,7 +1256,7 @@ window.PA = window.PA || {};
         api.setProgress(1);
       } else {
         // the ramp also makes rounds longer: up to half as long again at +100%
-        const len = Math.round((PA.store.state.settings.roundLen || 10) * (1 + c * 0.5));
+        const len = api.roundLen = Math.round((PA.store.state.settings.roundLen || 10) * (1 + c * 0.5));
         if (game.intro) await api.say(game.intro(level, api));
         let done = 0, qi = 0;
         while (done < len) {
@@ -1074,6 +1288,8 @@ window.PA = window.PA || {};
         }
       }
       if (!api.alive) return;
+      // a story ending before the sticker (the mermaid reaches the beach)
+      if (game.outro) { api.clear(); await game.outro(api, correct, total); if (!api.alive) return; }
       const res = PA.store.endRound(game.id, correct, total, game.maxLevel);
       screen.onLeave = null; api.alive = false;
       PA.store.tickPlay(Date.now() - started);
@@ -1138,6 +1354,8 @@ window.PA = window.PA || {};
     if (bonus) got.push(U.pick(STICKERS));
     got.forEach(s => PA.store.addSticker(s));
     const screen = U.el('div', 'screen');
+    const theme = U.THEMES[game.id];
+    if (theme) screen.style.background = theme.bg;
     const c = U.el('div', 'center');
     const n = name();
     const head = res.up ? 'New level unlocked!' : bonus ? 'Super challenge star!' : 'You did it' + (n ? ', ' + n : '') + '!';
@@ -2174,6 +2392,467 @@ PA.games = PA.games || [];
 })();
 
 </script>
+<script>/* js/games/trace.js */
+'use strict';
+// MAGIC WRITING: trace lines, shapes, letters, numbers, then write and spell little words.
+// Handwriting readiness follows the pre-writing order used by occupational therapists (Beery: down, across,
+// circle, cross, diagonals, square, triangle) before letters. Each letter is traced stroke by stroke from a green
+// start dot in the standard direction, following a star: correct formation early saves unlearning later, and
+// writing letters by hand helps children learn to recognise them (Longcamp et al.; James & Engelhardt).
+// The writing starts very big and gets smaller as she goes up the levels. The word levels add spelling: tap the
+// letters of a word in order, then write it (spelling and writing a word strengthen reading it; Ehri).
+//   1 lines and circles   2 shapes   3 capital letters   4 numbers   5 small letters
+//   6 write a 3-letter word   7 spell and write 3-letter words   8 write a 4-letter word   9 spell and write 4-letter words
+window.PA = window.PA || {};
+PA.games = PA.games || [];
+(function () {
+  const U = PA.ui, S = PA.store;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+
+  // ---------- the stroke font ----------
+  // Capitals and numbers: top 10, middle 50, baseline 90. Small letters: tall 10, middle 45, baseline 90, tail 112.
+  const CAP = {
+    A: [56, 'M28 10 L4 90', 'M28 10 L52 90', 'M14 60 L42 60'],
+    B: [52, 'M8 10 L8 90', 'M8 10 L30 10 A20 20 0 0 1 30 50 L8 50', 'M8 50 L32 50 A20 20 0 0 1 32 90 L8 90'],
+    C: [54, 'M52 22 A27 40 0 1 0 52 78'],
+    D: [54, 'M8 10 L8 90', 'M8 10 L20 10 A32 40 0 0 1 20 90 L8 90'],
+    E: [48, 'M8 10 L8 90', 'M8 10 L46 10', 'M8 50 L40 50', 'M8 90 L46 90'],
+    F: [46, 'M8 10 L8 90', 'M8 10 L44 10', 'M8 50 L38 50'],
+    G: [58, 'M52 22 A27 40 0 1 0 56 62 L56 52 L36 52'],
+    H: [54, 'M8 10 L8 90', 'M48 10 L48 90', 'M8 50 L48 50'],
+    I: [40, 'M20 10 L20 90', 'M4 10 L36 10', 'M4 90 L36 90'],
+    J: [48, 'M40 10 L40 66 A18 22 0 0 1 4 66'],
+    K: [50, 'M8 10 L8 90', 'M46 10 L8 56', 'M20 44 L48 90'],
+    L: [44, 'M8 10 L8 90 L42 90'],
+    M: [62, 'M6 90 L6 10 L31 62 L56 10 L56 90'],
+    N: [54, 'M8 90 L8 10 L48 90 L48 10'],
+    O: [60, 'M30 10 A26 40 0 0 0 30 90 A26 40 0 0 0 30 10'],
+    P: [48, 'M8 10 L8 90', 'M8 10 L26 10 A20 20 0 0 1 26 50 L8 50'],
+    Q: [62, 'M30 10 A26 40 0 0 0 30 90 A26 40 0 0 0 30 10', 'M36 66 L58 92'],
+    R: [50, 'M8 10 L8 90', 'M8 10 L26 10 A20 20 0 0 1 26 50 L8 50', 'M24 50 L48 90'],
+    S: [50, 'M46 20 A21 20 0 1 0 26 50 A21 20 0 1 1 6 80'],
+    T: [52, 'M4 10 L48 10', 'M26 10 L26 90'],
+    U: [54, 'M8 10 L8 64 A20 26 0 0 0 48 64 L48 10'],
+    V: [54, 'M4 10 L27 90 L50 10'],
+    W: [66, 'M4 10 L18 90 L33 40 L48 90 L62 10'],
+    X: [52, 'M6 10 L46 90', 'M46 10 L6 90'],
+    Y: [52, 'M4 10 L26 50', 'M48 10 L26 50 L26 90'],
+    Z: [50, 'M6 10 L46 10 L6 90 L46 90']
+  };
+  const NUM = {
+    0: [52, 'M26 10 A22 40 0 0 0 26 90 A22 40 0 0 0 26 10'],
+    1: [36, 'M8 26 L24 10 L24 90'],
+    2: [52, 'M8 30 A20 20 0 0 1 48 30 Q48 50 8 90 L48 90'],
+    3: [50, 'M8 22 A19 18 0 1 1 26 50 A21 20 0 1 1 6 80'],
+    4: [54, 'M36 10 L6 64 L50 64', 'M38 10 L38 90'],
+    5: [50, 'M12 10 L10 46 A21 22 0 1 1 8 84', 'M12 10 L44 10'],
+    6: [52, 'M42 12 Q10 28 8 64 A20 24 0 0 0 48 64 A20 24 0 0 0 8 64'],
+    7: [50, 'M6 10 L46 10 L18 90'],
+    8: [50, 'M25 10 A19 20 0 0 0 25 50 A20 20 0 0 1 25 90 A20 20 0 0 1 25 50 A19 20 0 0 0 25 10'],
+    9: [50, 'M46 30 A20 20 0 1 0 6 30 A20 20 0 1 0 46 30 L46 90']
+  };
+  const LOW = {
+    a: [54, 'M48 56 A21 22 0 1 0 48 79', 'M48 45 L48 90'],
+    b: [54, 'M8 10 L8 90', 'M8 68 A21 22 0 0 1 50 68 A21 22 0 0 1 8 68'],
+    c: [50, 'M46 52 A21 22 0 1 0 46 83'],
+    d: [54, 'M48 56 A21 22 0 1 0 48 79', 'M48 10 L48 90'],
+    e: [52, 'M8 68 L48 68 A21 22 0 1 0 44 84'],
+    f: [42, 'M40 16 Q22 4 20 26 L20 90', 'M4 48 L36 48'],
+    g: [54, 'M48 56 A21 22 0 1 0 48 79', 'M48 45 L48 100 A18 14 0 0 1 10 104'],
+    h: [52, 'M8 10 L8 90', 'M8 66 A20 20 0 0 1 48 66 L48 90'],
+    i: [24, 'M12 45 L12 90', 'M12 27 L12 28'],
+    j: [34, 'M26 45 L26 100 A14 14 0 0 1 2 104', 'M26 27 L26 28'],
+    k: [48, 'M8 10 L8 90', 'M44 45 L8 72', 'M20 64 L46 90'],
+    l: [24, 'M12 10 L12 90'],
+    m: [62, 'M6 45 L6 90', 'M6 62 A12 16 0 0 1 30 62 L30 90', 'M30 62 A12 16 0 0 1 54 62 L54 90'],
+    n: [52, 'M8 45 L8 90', 'M8 66 A20 20 0 0 1 48 66 L48 90'],
+    o: [54, 'M27 45 A21 22.5 0 0 0 27 90 A21 22.5 0 0 0 27 45'],
+    p: [54, 'M8 45 L8 112', 'M8 68 A21 22 0 0 1 50 68 A21 22 0 0 1 8 68'],
+    q: [54, 'M48 56 A21 22 0 1 0 48 79', 'M48 45 L48 112'],
+    r: [44, 'M8 45 L8 90', 'M8 64 A22 20 0 0 1 42 52'],
+    s: [44, 'M40 52 A15 11 0 1 0 22 67 A16 11 0 1 1 4 84'],
+    t: [40, 'M20 18 L20 90', 'M4 45 L36 45'],
+    u: [52, 'M8 45 L8 70 A20 20 0 0 0 48 70', 'M48 45 L48 90'],
+    v: [50, 'M4 45 L25 90 L46 45'],
+    w: [62, 'M4 45 L16 90 L31 58 L46 90 L58 45'],
+    x: [48, 'M6 45 L44 90', 'M44 45 L6 90'],
+    y: [50, 'M6 45 L28 90', 'M46 45 L16 112'],
+    z: [46, 'M6 45 L42 45 L6 90 L42 90']
+  };
+  const star5 = (() => {
+    const P = [0, 1, 2, 3, 4].map(i => { const a = -Math.PI / 2 + i * 2 * Math.PI / 5; return [42 + 42 * Math.cos(a), 54 + 42 * Math.sin(a)]; });
+    return [0, 2, 4, 1, 3, 0].map((k, i) => (i ? 'L' : 'M') + P[k][0].toFixed(1) + ' ' + P[k][1].toFixed(1)).join(' ');
+  })();
+  const SHAPES = {
+    down: [24, 'M12 10 L12 90', 'a line going down'],
+    across: [80, 'M0 50 L80 50', 'a line going across'],
+    circle: [80, 'M40 10 A40 40 0 0 0 40 90 A40 40 0 0 0 40 10', 'a circle'],
+    cross: [80, 'M40 10 L40 90', 'M0 50 L80 50', 'a cross'],
+    slant: [80, 'M4 10 L76 90', 'a slanty line'],
+    rain: [76, 'M4 10 L4 50', 'M38 30 L38 70', 'M72 50 L72 90', 'raindrops falling down'],
+    square: [76, 'M4 12 L4 88 L72 88 L72 12 L4 12', 'a square'],
+    triangle: [84, 'M42 10 L4 88 L80 88 L42 10', 'a triangle'],
+    xshape: [76, 'M4 10 L72 90', 'M72 10 L4 90', 'an X'],
+    heart: [80, 'M40 28 C30 2 0 12 4 40 C8 62 32 74 40 90 C48 74 72 62 76 40 C80 12 50 2 40 28', 'a heart'],
+    star: [84, star5, 'a star'],
+    zigzag: [90, 'M0 30 L18 70 L36 30 L54 70 L72 30 L90 70', 'a zigzag'],
+    wave: [96, 'M0 50 Q12 22 24 50 T48 50 T72 50 T96 50', 'a wave'],
+    diamond: [70, 'M35 8 L2 50 L35 92 L68 50 L35 8', 'a diamond']
+  };
+  const glyph = (table, k) => { const g = table[k]; const strokes = g.slice(1).filter(x => /^M/.test(x)); return { w: g[0], s: strokes }; };
+
+  const WORDS3 = [['🐱', 'cat'], ['🐶', 'dog'], ['☀️', 'sun'], ['🎩', 'hat'], ['🐷', 'pig'], ['🛏️', 'bed'], ['🚌', 'bus'], ['☕', 'cup'],
+    ['🦊', 'fox'], ['🐔', 'hen'], ['🗺️', 'map'], ['🦇', 'bat'], ['🐛', 'bug'], ['🕸️', 'web'], ['📦', 'box'], ['🐜', 'ant'], ['🥚', 'egg'],
+    ['🚐', 'van'], ['🥅', 'net'], ['🐮', 'cow'], ['🐝', 'bee']];
+  const WORDS4 = [['🐟', 'fish'], ['🐸', 'frog'], ['🦆', 'duck'], ['⭐', 'star'], ['🚢', 'ship'], ['🦀', 'crab'], ['🥁', 'drum'], ['🥛', 'milk'],
+    ['🔔', 'bell'], ['🎁', 'gift'], ['🧦', 'sock'], ['💍', 'ring'], ['⛺', 'tent'], ['✋', 'hand'], ['🦢', 'swan'], ['💡', 'lamp'], ['🌙', 'moon'],
+    ['🤴', 'king'], ['🚩', 'flag'], ['🐻', 'bear']];
+  // letters in teaching order: easy straight lines first (capitals), "magic c" letters first (small letters)
+  const CAP_ORDER = 'LITEFHOCQGUJDPBRVWXYZAMNKS'.split('');
+  const LOW_ORDER = 'cadgoqltijhbnmrpuyeswvxzfk'.split('');
+  const SIZE = { 1: 24, 2: 22, 3: 21, 4: 19, 5: 16, 6: 12, 7: 11, 8: 10.5, 9: 9.5 };
+  const INK = ['#ff4fa0', '#9b5cff', '#2f8fff', '#20b87a', '#ff9a1f'];
+
+  // ---------- the tracer ----------
+  // glyphs: [{w, s:[path...], say}] side by side. Resolves {offs}: how many times she slipped off the path.
+  function tracer(api, glyphs, o) {
+    const low = !!o.low, GAP = 14, PADX = 16;
+    const H = low ? 126 : 102, Y0 = low ? -2 : -1;
+    let x = 0;
+    const at = glyphs.map(g => { const a = x; x += g.w + GAP; return a; });
+    const W = x - GAP;
+    const vb = [-PADX, Y0, W + PADX * 2, H];
+    const tolU = o.tol, track = Math.max(12, o.tol * 1.45);
+    const svg = mk('svg', { viewBox: vb.join(' '), class: 'trace-svg' });
+    svg.style.height = o.size + 'rem';
+    svg.style.width = (o.size * vb[2] / vb[3]).toFixed(2) + 'rem';
+    if (low) {
+      mk('line', { x1: vb[0], x2: W + PADX, y1: 10, y2: 10, class: 'tr-line' }, svg);
+      mk('line', { x1: vb[0], x2: W + PADX, y1: 45, y2: 45, class: 'tr-line mid' }, svg);
+      mk('line', { x1: vb[0], x2: W + PADX, y1: 90, y2: 90, class: 'tr-line base' }, svg);
+    }
+    const gTrack = mk('g', {}, svg), gDots = mk('g', {}, svg), gInk = mk('g', {}, svg), gMark = mk('g', {}, svg);
+    const strokes = [], groups = [];
+    glyphs.forEach((g, gi) => {
+      const tg = mk('g', { transform: `translate(${at[gi]} 0)` }, gTrack);
+      const dg = mk('g', { transform: `translate(${at[gi]} 0)` }, gDots);
+      if (g.say) U.tag(tg, g.say, glyphs.length > 1);
+      groups.push(tg);
+      g.s.forEach(d => {
+        const el = mk('path', { d, class: 'tr-track', 'stroke-width': track }, tg);
+        mk('path', { d, class: 'tr-dots' }, dg);
+        strokes.push({ gi, el, at: at[gi] });
+      });
+    });
+    const start = mk('circle', { r: track * 0.5, class: 'tr-start' }, gMark);
+    const arrow = mk('path', { d: 'M-5 -6 L7 0 L-5 6 Z', class: 'tr-arrow' }, gMark);
+    const head = mk('path', { d: PA.art.starPath(0, 0, track * 0.62, track * 0.27), class: 'tr-star' }, gMark);
+
+    const el = U.el('div', 'card trace-card');
+    el.appendChild(svg);
+
+    el.run = () => new Promise(resolve => {
+      // sample each stroke into points 2.5 units apart (needs the svg on the page)
+      strokes.forEach(s => {
+        const L = s.el.getTotalLength();
+        s.dot = L < 4;
+        const n = Math.max(2, Math.ceil(L / 2.5));
+        s.pts = [];
+        for (let i = 0; i <= n; i++) { const p = s.el.getPointAtLength(L * i / n); s.pts.push([p.x + s.at, p.y]); }
+        s.ink = mk('polyline', { class: 'tr-ink', 'stroke-width': track * 0.7, stroke: INK[s.gi % INK.length], points: '' }, gInk);
+      });
+      let k = 0, idx = 0, down = false, active = false, offs = 0, done = false, lastMove = Date.now(), nagAt = 0, demoing = 0;
+      const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+      const LOOK = 8;
+      const marks = () => {
+        const s = strokes[k];
+        if (!s) { start.style.display = arrow.style.display = head.style.display = 'none'; return; }
+        const p0 = s.pts[0], ph = s.pts[idx];
+        start.setAttribute('cx', p0[0]); start.setAttribute('cy', p0[1]);
+        start.style.display = idx === 0 ? '' : 'none';
+        head.setAttribute('transform', `translate(${ph[0]} ${ph[1]})`);
+        head.style.display = idx === 0 ? 'none' : '';
+        if (s.dot) { arrow.style.display = 'none'; return; }
+        const a = s.pts[Math.min(s.pts.length - 1, idx + 9)], b = s.pts[Math.min(s.pts.length - 1, idx + 13)];
+        const ang = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI;
+        arrow.style.display = idx + 13 < s.pts.length ? '' : 'none';
+        arrow.setAttribute('transform', `translate(${b[0]} ${b[1]}) rotate(${ang.toFixed(0)}) scale(${(track / 20).toFixed(2)})`);
+      };
+      const ink = () => { const s = strokes[k]; s.ink.setAttribute('points', s.pts.slice(0, idx + 1).map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ')); };
+      const finishStroke = () => {
+        const s = strokes[k];
+        idx = s.pts.length - 1; ink();
+        s.el.classList.add('done');
+        PA.audio.sfx('step');
+        k++; idx = 0; active = false;
+        const nx = strokes[k];
+        if (!nx || nx.gi !== s.gi) {
+          U.flash(groups[s.gi]);
+          if (o.onGlyph) o.onGlyph(s.gi);
+        }
+        marks();
+        if (!nx) { done = true; clearInterval(idle); resolve({ offs }); }
+      };
+      const nag = text => { if (Date.now() - nagAt > 3500) { nagAt = Date.now(); api.say(text); } };
+      // demo: a star draws the strokes from k (from idx) to the end of the glyph, or of everything
+      el.demo = all => new Promise(res => {
+        const my = ++demoing;
+        const trail = mk('polyline', { class: 'tr-demo', 'stroke-width': track * 0.5 }, gMark);
+        const ds = mk('path', { d: PA.art.starPath(0, 0, track * 0.7, track * 0.3), class: 'tr-star demo' }, gMark);
+        const g0 = strokes[k] ? strokes[k].gi : 0;
+        let kk = k, i = idx, acc = 0, last = 0, pts = [];
+        let stopped = false;
+        const stop = () => { if (stopped) return; stopped = true; trail.remove(); ds.remove(); res(); };
+        setTimeout(stop, 15000); // never hang a question on the demo
+        const tick = () => setTimeout(() => step(performance.now()), 30); // timers, not animation frames: never stalls
+        const step = t => {
+          if (my !== demoing || !api.alive || done) return stop();
+          if (!last) last = t;
+          acc += (t - last) / 1000 * 52; last = t;
+          while (acc >= 1) {
+            acc--; i++;
+            if (i >= strokes[kk].pts.length) {
+              kk++; i = 0; pts = []; acc = -14;
+              if (kk >= strokes.length || (!all && strokes[kk].gi !== g0)) { setTimeout(stop, 300); return; }
+            }
+          }
+          const p = strokes[kk].pts[Math.max(0, i)];
+          pts.push(p);
+          ds.setAttribute('transform', `translate(${p[0]} ${p[1]})`);
+          trail.setAttribute('points', pts.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' '));
+          tick();
+        };
+        tick();
+      });
+      const toVB = e => {
+        const r = svg.getBoundingClientRect();
+        const sc = Math.min(r.width / vb[2], r.height / vb[3]);
+        const ox = r.left + (r.width - vb[2] * sc) / 2, oy = r.top + (r.height - vb[3] * sc) / 2;
+        return { p: [vb[0] + (e.clientX - ox) / sc, vb[1] + (e.clientY - oy) / sc], sc };
+      };
+      let tol = tolU;
+      const move = e => {
+        if (done || !api.alive) return;
+        const { p } = toVB(e);
+        const s = strokes[k];
+        if (!active) {
+          // start (or carry on) from the green dot or the star
+          if (down && dist(p, s.pts[idx]) < tol * 1.2) { active = true; } else return;
+        }
+        let best = -1;
+        for (let j = idx + 1; j <= Math.min(s.pts.length - 1, idx + LOOK); j++) if (dist(p, s.pts[j]) < tol) best = j;
+        if (best > idx) {
+          idx = best; lastMove = Date.now(); ink(); marks();
+          if (idx >= s.pts.length - 2) finishStroke();
+        } else {
+          let md = Infinity;
+          for (let j = idx; j <= Math.min(s.pts.length - 1, idx + LOOK); j++) md = Math.min(md, dist(p, s.pts[j]));
+          if (md > tol * 2.3) {
+            active = false; offs++;
+            PA.audio.sfx('wrong');
+            nag(U.pick(['Oops! Go back to the star.', 'Stay on the path! Go back to the star.']));
+            if (offs % 2 === 0) el.demo(false);
+          }
+        }
+      };
+      svg.addEventListener('pointerdown', e => {
+        if (done || !api.alive) return;
+        e.preventDefault();
+        try { svg.setPointerCapture(e.pointerId); } catch (er) { }
+        demoing++; el.touched = true;
+        const { p, sc } = toVB(e);
+        tol = Math.max(tolU, 24 / sc); // never fussier than about a fingertip
+        down = true;
+        const s = strokes[k];
+        if (s.dot) { if (dist(p, s.pts[0]) < tol * 1.8) { lastMove = Date.now(); finishStroke(); } else nag('Tap the green dot.'); return; }
+        if (dist(p, s.pts[idx]) < tol * 1.7) { active = true; lastMove = Date.now(); move(e); }
+        else nag(idx === 0 ? 'Start at the green dot.' : 'Carry on from the star.');
+      });
+      svg.addEventListener('pointermove', e => { if (down) move(e); });
+      const up = () => { down = false; active = false; };
+      svg.addEventListener('pointerup', up);
+      svg.addEventListener('pointercancel', up);
+      const idle = setInterval(() => {
+        if (!api.alive || done) return clearInterval(idle);
+        if (Date.now() - lastMove > 11000 && !down) {
+          lastMove = Date.now();
+          api.say(idx === 0 ? 'Put your finger on the green dot, and follow the star.' : 'Carry on from the star.');
+          el.demo(false);
+        }
+      }, 1000);
+      marks();
+    });
+    return el;
+  }
+
+  // ---------- questions ----------
+  const sizeFor = (api, lvl) => SIZE[lvl] * (1 - 0.15 * api.c);
+  const tolFor = (api, lvl) => (lvl <= 2 ? 13 : lvl <= 5 ? 12 : 10.5) - 2 * api.c;
+  const spell = w => w.split('').join(', ');
+
+  function traceOne(api, lvl, g, key, intro, praise, low) {
+    return {
+      key,
+      run: async a => {
+        const t = tracer(a, [g], { size: sizeFor(a, lvl), tol: tolFor(a, lvl), low });
+        a.stage.appendChild(t);
+        a.setPrompt(intro + ' Start at the green dot, and follow the star.');
+        const go = t.run();
+        await a.say(intro + ' Watch the magic star!');
+        if (!a.alive) return false;
+        if (!t.touched) await t.demo(true);
+        if (!a.alive) return false;
+        if (!t.touched) a.say('Your turn! Start at the green dot.');
+        const r = await go;
+        if (!a.alive) return false;
+        PA.audio.sfx('right'); a.cheer();
+        await a.say(praise);
+        return r.offs <= 1 + Math.floor(g.s.length / 3);
+      }
+    };
+  }
+  function shapeQ(api, lvl) {
+    const pool = lvl === 1 ? ['down', 'across', 'circle', 'cross', 'slant', 'rain'] : ['square', 'triangle', 'xshape', 'heart', 'star', 'zigzag', 'wave', 'diamond'];
+    const k = S.pick('trace', pool, 1, x => 'shape:' + x)[0];
+    const g = glyph(SHAPES, k), name = SHAPES[k][SHAPES[k].length - 1];
+    return traceOne(api, lvl, g, 'shape:' + k, `Let's draw ${name}!`, U.pick([`You drew ${name}!`, `Beautiful! ${cap1(name)}!`]));
+  }
+  const cap1 = s => s.charAt(0).toUpperCase() + s.slice(1);
+  function capQ(api, lvl) {
+    const pool = CAP_ORDER.slice(0, Math.min(26, 8 + Math.floor(api.c * 20)));
+    const L = S.pick('trace', pool, 1, x => 'cap:' + x)[0];
+    return traceOne(api, lvl, glyph(CAP, L), 'cap:' + L, `This is big ${L}. Let's write big ${L}!`, U.pick([`You wrote big ${L}!`, `Big ${L}! Lovely writing!`]));
+  }
+  function numQ(api, lvl) {
+    const n = S.pick('trace', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 1, x => 'num:' + x)[0];
+    const w = U.numWord(n);
+    return traceOne(api, lvl, glyph(NUM, n), 'num:' + n, `This is the number ${w}. Let's write ${w}!`, U.pick([`You wrote ${w}!`, `${cap1(w)}! Great writing!`]));
+  }
+  function lowQ(api, lvl) {
+    const pool = LOW_ORDER.slice(0, Math.min(26, 8 + Math.floor(api.c * 20)));
+    const l = S.pick('trace', pool, 1, x => 'low:' + x)[0];
+    return traceOne(api, lvl, glyph(LOW, l), 'low:' + l, `This is little ${l}. Let's write little ${l}!`, U.pick([`You wrote little ${l}!`, `Little ${l}! Lovely!`]), true);
+  }
+  // write a word: the picture, then the word to trace (letters light up as they are spelled out)
+  async function writeWord(a, lvl, e, w, demoFirst) {
+    const gl = w.split('').map(ch => Object.assign(glyph(LOW, ch), { say: ch }));
+    const t = tracer(a, gl, {
+      size: sizeFor(a, lvl), tol: tolFor(a, lvl), low: true,
+      onGlyph: gi => { if (gi < w.length - 1) a.say(w[gi]); }
+    });
+    a.stage.appendChild(t);
+    const go = t.run();
+    a.setPrompt(`${w}. Write the word ${w}: ${spell(w)}.`);
+    await a.say(`${w}. Write the word ${w}: ${spell(w)}.`);
+    if (demoFirst && a.alive) await t.demo(false);
+    const r = await go;
+    if (!a.alive) return false;
+    PA.audio.sfx('right'); a.cheer();
+    await a.say(U.pick([`${spell(w)}. ${w}! You wrote ${w}!`, `You wrote ${w}! ${spell(w)}!`]));
+    return r.offs <= 1 + Math.floor(w.length / 2);
+  }
+  const pictureCard = (e, w) => U.tag(U.el('div', 'card prompt-card word-pic', `<span class="emoji">${e}</span>`), w);
+  function wordQ(api, lvl, list) {
+    const [e, w] = S.pick('trace', list, 1, x => 'word:' + x[1])[0];
+    return {
+      key: 'word:' + w, size: 2,
+      run: async a => {
+        a.stage.style.flexDirection = 'column';
+        a.stage.appendChild(pictureCard(e, w));
+        return writeWord(a, lvl, e, w, true);
+      }
+    };
+  }
+  // spell it with letter tiles first, then write it
+  function spellQ(api, lvl, list) {
+    const [e, w] = S.pick('trace', list, 1, x => 'spell:' + x[1])[0];
+    return {
+      key: 'spell:' + w, size: 3,
+      run: async a => {
+        a.stage.style.flexDirection = 'column';
+        const top = U.el('div', 'row');
+        top.appendChild(pictureCard(e, w));
+        const letters = w.split('');
+        const slots = U.el('div', 'slots');
+        const slotEls = letters.map(() => { const s = U.el('div', 'slot'); slots.appendChild(s); return s; });
+        top.appendChild(slots);
+        a.stage.appendChild(top);
+        const extra = U.shuffle('abcdefghijklmnoprstuwy'.split('').filter(x => letters.indexOf(x) < 0)).slice(0, a.nOpts(2, 4));
+        const row = U.el('div', 'tiles-row');
+        a.choices.appendChild(row);
+        let atI = 0, misses = 0;
+        a.prompt(`Spell ${w}! Tap the letters in order. ${w}.`);
+        slotEls[0].classList.add('next');
+        const spelled = await new Promise(resolve => {
+          U.shuffle(letters.concat(extra)).forEach(ch => {
+            const b = U.el('button', 'card choice ltile', ch);
+            b.onclick = () => {
+              if (!a.alive || atI >= letters.length || b.classList.contains('used')) return;
+              if (ch === letters[atI]) {
+                b.classList.add('used'); slotEls[atI].textContent = ch; slotEls[atI].classList.add('filled');
+                slotEls.forEach(s => s.classList.remove('next', 'hint'));
+                row.querySelectorAll('.hint').forEach(x => x.classList.remove('hint'));
+                PA.audio.sfx('step'); atI++;
+                if (atI < letters.length) { slotEls[atI].classList.add('next'); a.say(ch); } else resolve(misses === 0);
+              } else {
+                misses++; PA.audio.sfx('wrong');
+                b.classList.remove('wrong'); void b.offsetWidth; b.classList.add('wrong');
+                setTimeout(() => b.classList.remove('wrong'), 600);
+                if (misses >= 2) {
+                  row.querySelectorAll('.ltile').forEach(x => { if (!x.classList.contains('used') && x.textContent === letters[atI]) x.classList.add('hint'); });
+                  a.say(`${w}. The next letter is ${letters[atI]}. Tap ${letters[atI]}.`);
+                } else a.say(`Listen: ${w}. ${atI === 0 ? 'What sound comes first?' : 'What comes next?'}`);
+              }
+            };
+            row.appendChild(b);
+          });
+        });
+        if (!a.alive) return false;
+        PA.audio.sfx('right'); a.cheer();
+        await a.say(`${spell(w)}. You spelled ${w}! Now write it.`);
+        if (!a.alive) return false;
+        a.choices.innerHTML = '';
+        top.removeChild(slots);
+        const wrote = await writeWord(a, lvl, e, w, false);
+        return spelled && wrote;
+      }
+    };
+  }
+
+  PA.traceFont = { CAP, NUM, LOW, SHAPES };
+  PA.games.push({
+    id: 'trace', name: 'Magic Writing', icon: '✍️', color: '#e2fbe4', maxLevel: 9,
+    skill: 'Pre-writing strokes, letters, numbers, then spelling and writing words',
+    research: 'Pre-writing strokes come first in the order occupational therapists use (Beery: down, across, circle, cross, diagonals, square, triangle). Letters are traced stroke by stroke from a start dot in the standard direction, because writing letters by hand helps children recognise them (Longcamp; James). The writing starts very big and shrinks as she climbs. Spelling a word and then writing it strengthens reading it (Ehri).',
+    levels: ['Lines and circles', 'Shapes', 'Capital letters', 'Numbers 0 to 9', 'Small letters', 'Write 3-letter words', 'Spell and write 3-letter words', 'Write 4-letter words', 'Spell and write 4-letter words'],
+    tryAtHome: [
+      'Draw letters together in sand, shaving foam or with a finger on her back, and guess the letter.',
+      'Hold a chunky crayon with her: "start at the top, go down".',
+      'Write her name in big dotted letters for her to trace over.',
+      'Ask her to spell and write a shopping word, like "egg" or "jam", on your list.'
+    ],
+    intro: lvl => ['Let\'s draw magic lines with your finger!', 'Let\'s draw shapes with your magic finger!', 'Let\'s write big letters!', 'Let\'s write numbers!',
+      'Let\'s write little letters!', 'Let\'s write words!', 'Let\'s spell and write words!', 'Let\'s write bigger words!', 'Let\'s spell and write bigger words!'][lvl - 1],
+    next(api, i, lvl) {
+      if (lvl <= 2) return shapeQ(api, lvl);
+      if (lvl === 3) return capQ(api, lvl);
+      if (lvl === 4) return numQ(api, lvl);
+      if (lvl === 5) return lowQ(api, lvl);
+      if (lvl === 6) return wordQ(api, lvl, WORDS3);
+      if (lvl === 7) return spellQ(api, lvl, WORDS3);
+      if (lvl === 8) return wordQ(api, lvl, WORDS4);
+      return spellQ(api, lvl, WORDS4);
+    }
+  });
+})();
+
+</script>
 <script>/* js/games/rhyme.js */
 'use strict';
 // RHYMES & CLAPS: phonological awareness, the "hearing the sounds in words" skill that comes before phonics.
@@ -2824,6 +3503,431 @@ PA.games = PA.games || [];
 })();
 
 </script>
+<script>/* js/games/colours.js */
+'use strict';
+// MERMAID COLOURS: a silly shark is chasing the mermaid. Every right answer helps her swim towards the beach;
+// a wrong tap lets the shark creep a little closer, but it never catches her (no losing, as in every game here).
+// At the end of the round she reaches the land and turns into a princess with legs.
+// The ladder follows early-years art and science: name colours, sort things by colour (sorting by one attribute
+// is also an early maths skill), then cause and effect with paint: two colours make a new one, mix it yourself,
+// lighter with white and brown from all three, and the order of the rainbow.
+//   1 find the colour          2 colour homes (put each sea friend in the matching home)
+//   3 what do two colours make?   4 mix it yourself (tap two paints)   5 mixing homes (which two make it?)
+//   6 lighter with white, and brown      7 rainbow order: which colour is missing?
+window.PA = window.PA || {};
+PA.games = PA.games || [];
+(function () {
+  const U = PA.ui, S = PA.store;
+  const C = {
+    red: '#e8383d', orange: '#ff8a1c', yellow: '#ffd21f', green: '#38b54a', blue: '#2f7fe8', purple: '#8e4fd6',
+    pink: '#ff8fc8', brown: '#8b5a2b', black: '#2d2a32', white: '#ffffff', grey: '#9a9aa6', 'light blue': '#a6dcff'
+  };
+  const BASIC = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+  const RAINBOW = BASIC;
+  const PRIMARY = ['red', 'yellow', 'blue'];
+  const MIX = { 'red+yellow': 'orange', 'blue+red': 'purple', 'blue+yellow': 'green', 'red+white': 'pink', 'blue+white': 'light blue', 'black+white': 'grey' };
+  const mixOf = (a, b) => a === b ? a : MIX[[a, b].sort().join('+')] || null;
+  const PAIRS = [['red', 'yellow', 'orange'], ['blue', 'yellow', 'green'], ['red', 'blue', 'purple']];
+  const KINDS = ['fish', 'shell', 'star', 'pearl'];
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const dark = col => col === 'white' ? '#bdb6cc' : PA.art.shade(C[col], -0.3);
+
+  // ---------- pictures ----------
+  function thing(kind, col) {
+    const s = `fill="${C[col]}" stroke="${dark(col)}" stroke-width="4" stroke-linejoin="round"`;
+    let b;
+    if (kind === 'fish') b = `<path d="M12 50 Q40 14 70 38 L90 22 L86 50 L90 78 L70 62 Q40 86 12 50 Z" ${s}/><circle cx="32" cy="44" r="6" fill="#fff"/><circle cx="33" cy="45" r="3" fill="#241626"/>`;
+    else if (kind === 'shell') b = `<path d="M50 86 L16 40 Q50 2 84 40 Z" ${s}/><path d="M50 84 L33 30 M50 84 L50 20 M50 84 L67 30" stroke="${dark(col)}" stroke-width="3.5" fill="none" stroke-linecap="round"/><rect x="39" y="80" width="22" height="12" rx="5" ${s}/>`;
+    else if (kind === 'star') b = `<path d="${PA.art.starPath(50, 54, 44, 19)}" ${s}/><circle cx="42" cy="50" r="3.5" fill="${dark(col)}"/><circle cx="58" cy="50" r="3.5" fill="${dark(col)}"/><path d="M43 60 Q50 66 57 60" stroke="${dark(col)}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    else b = `<circle cx="50" cy="50" r="38" ${s}/><circle cx="37" cy="36" r="9" fill="#fff" opacity=".75"/>`;
+    return `<svg viewBox="0 0 100 100" aria-hidden="true">${b}</svg>`;
+  }
+  const drop = col => `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 Q80 44 80 62 A30 30 0 0 1 20 62 Q20 44 50 6 Z" fill="${C[col] || '#cfc7da'}" stroke="${col ? dark(col) : '#a99fbd'}" stroke-width="4" stroke-linejoin="round"/><ellipse cx="38" cy="58" rx="6" ry="10" fill="#fff" opacity=".55"/></svg>`;
+  const pot = col => `<svg viewBox="0 0 100 100" aria-hidden="true"><rect x="22" y="12" width="56" height="12" rx="5" fill="#d9cfe8"/><path d="M18 28 L82 28 L76 90 Q50 96 24 90 Z" fill="#fff" stroke="#cbbfdd" stroke-width="3"/><path d="M21 44 L79 44 L76 90 Q50 96 24 90 Z" fill="${C[col]}" stroke="${dark(col)}" stroke-width="3"/></svg>`;
+  const caveHome = col => `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M6 94 L6 52 A44 44 0 0 1 94 52 L94 94 Z" fill="${C[col]}" stroke="${dark(col)}" stroke-width="4" stroke-linejoin="round"/><path d="M28 94 L28 62 A22 22 0 0 1 72 62 L72 94 Z" fill="#103b5c" opacity=".3"/></svg>`;
+
+  // ---------- the chase ----------
+  const GAP = 9;
+  function scene(api) {
+    if (api.sea) return api.sea;
+    const el = U.el('div', 'sea');
+    el.innerHTML = '<div class="waves"></div><div class="beach"><span class="emoji palm">🌴</span><span class="emoji hut">🏰</span></div>' +
+      '<span class="emoji bub b1">○</span><span class="emoji bub b2">○</span><span class="emoji bub b3">○</span>';
+    const mer = U.el('div', 'mer', PA.art.mermaid());
+    const shark = U.el('div', 'shark', PA.art.shark());
+    U.tag(mer, 'mermaid'); U.tag(shark, 'shark');
+    el.append(shark, mer);
+    const sea = api.sea = { el, mer, shark, n: 0, gap: GAP };
+    sea.place = () => {
+      const x = 14 + 56 * Math.min(1, sea.n / (api.roundLen || 10));
+      mer.style.left = x + '%';
+      shark.style.left = (x - 16 - sea.gap) + '%';
+    };
+    sea.ahead = () => {
+      sea.n++; sea.gap = GAP; sea.place();
+      mer.classList.remove('swim'); void mer.offsetWidth; mer.classList.add('swim');
+    };
+    sea.closer = () => {
+      sea.gap = Math.max(0, sea.gap - 4.5); sea.place();
+      shark.classList.remove('snap'); void shark.offsetWidth; shark.classList.add('snap');
+    };
+    sea.place();
+    return sea;
+  }
+  // every question: the chase on top, the question underneath
+  function sq(api, q) {
+    const sea = scene(api), build = q.build;
+    q.build = (stage, a) => {
+      stage.style.flexDirection = 'column';
+      stage.appendChild(sea.el);
+      if (build) build(stage, a);
+    };
+    const onRight = q.onRight;
+    q.onRight = () => { sea.ahead(); if (onRight) onRight(); };
+    const onHint = q.onHint;
+    q.onHint = () => { sea.closer(); if (onHint) onHint(); };
+    q.wrong = () => { sea.closer(); return Math.random() < 0.35 ? 'Swim, mermaid! Try again!' : null; };
+    return q;
+  }
+  const equation = (cols, ans) => {
+    const row = U.el('div', 'card mixrow');
+    cols.forEach((col, i) => {
+      if (i) row.appendChild(U.el('div', 'plus', '+'));
+      row.appendChild(U.tag(U.el('div', 'paint', drop(col)), col));
+    });
+    row.appendChild(U.el('div', 'plus', '='));
+    const q = U.el('div', 'paint ask', drop(null) + '<b>?</b>');
+    row.appendChild(q);
+    row.fill = () => { q.innerHTML = drop(ans); q.classList.add('filled'); };
+    return row;
+  };
+
+  // 1: find the colour
+  function findQ(api) {
+    const pool = BASIC.concat(api.c > 0.35 ? ['pink', 'brown'] : []).concat(api.c > 0.7 ? ['black', 'white'] : []);
+    const col = S.pick('colours', pool, 1, x => 'find:' + x)[0];
+    const others = U.shuffle(pool.filter(x => x !== col)).slice(0, api.nOpts(3, 5) - 1);
+    const opts = U.shuffle([col].concat(others));
+    const mixed = api.c > 0.3; // different sea friends, so she has to look at the colour, not the shape
+    const kind = U.pick(KINDS);
+    return sq(api, {
+      key: 'find:' + col,
+      prompt: mixed ? `Find something ${col}!` : `Find the ${col} ${kind}!`,
+      choices: opts.map(o => ({ html: thing(mixed ? U.pick(KINDS) : kind, o), cls: 'sea-choice', correct: o === col, aria: o })),
+      hint: `This one is ${col}. Tap it.`,
+      praise: U.pick([`Yes! That's ${col}!`, `${cap(col)}! Swim, mermaid, swim!`, `You found ${col}!`])
+    });
+  }
+
+  // 3: what do two colours make?
+  function mixQ(api) {
+    const pi = S.pick('colours', [0, 1, 2], 1, k => 'mix:' + PAIRS[k][2])[0];
+    let [a, b, ans] = PAIRS[pi];
+    if (Math.random() < 0.5) { const t = a; a = b; b = t; }
+    let opts = ['orange', 'green', 'purple'];
+    if (api.nOpts(3, 4) > 3) opts.push(U.pick(PRIMARY));
+    opts = U.shuffle(opts);
+    let row;
+    return sq(api, {
+      key: 'mix:' + ans,
+      prompt: `${cap(a)} and ${b} make... which colour?`,
+      build(stage) { row = equation([a, b], ans); stage.appendChild(row); },
+      onRight: () => row.fill(),
+      choices: opts.map(o => ({ html: drop(o), cls: 'paint-choice', correct: o === ans, aria: o })),
+      hint: `${cap(a)} and ${b} make ${ans}. Tap ${ans}.`,
+      praise: `Yes! ${cap(a)} and ${b} make ${ans}!`
+    });
+  }
+
+  // 6: lighter with white, and brown from all three
+  const LIGHT = [
+    { cols: ['red', 'white'], ans: 'pink', dis: ['purple', 'orange'] },
+    { cols: ['blue', 'white'], ans: 'light blue', dis: ['green', 'purple'] },
+    { cols: ['black', 'white'], ans: 'grey', dis: ['brown', 'blue'] },
+    { cols: ['red', 'yellow', 'blue'], ans: 'brown', dis: ['green', 'orange', 'purple'] }
+  ];
+  function lightQ(api) {
+    const li = S.pick('colours', LIGHT.map((_, k) => k), 1, k => 'light:' + LIGHT[k].ans)[0];
+    const L = LIGHT[li];
+    const opts = U.shuffle([L.ans].concat(U.shuffle(L.dis).slice(0, api.nOpts(2, 3))));
+    const said = L.cols.length === 2 ? `${cap(L.cols[0])} and ${L.cols[1]}` : 'Red and yellow and blue, all mixed together,';
+    let row;
+    return sq(api, {
+      key: 'light:' + L.ans,
+      prompt: `${said} make... which colour?`,
+      build(stage) { row = equation(L.cols, L.ans); stage.appendChild(row); },
+      onRight: () => row.fill(),
+      choices: opts.map(o => ({ html: drop(o), cls: 'paint-choice', correct: o === L.ans, aria: o })),
+      hint: `${said} make ${L.ans}. Tap ${L.ans}.`,
+      praise: L.ans === 'brown' ? 'Yes! When you mix lots of colours, you get brown!' : `Yes! ${cap(L.cols[0])} and white make ${L.ans}. White makes colours lighter!`
+    });
+  }
+
+  // 7: rainbow order
+  function rainbowQ(api) {
+    const miss = S.pick('colours', RAINBOW, 1, x => 'rainbow:' + x)[0];
+    const mi = RAINBOW.indexOf(miss);
+    const pool = RAINBOW.filter(x => x !== miss).concat(['pink', 'brown']);
+    const opts = U.shuffle([miss].concat(U.shuffle(pool).slice(0, api.nOpts(2, 4))));
+    const said = RAINBOW.join(', ');
+    let gap;
+    return sq(api, {
+      key: 'rainbow:' + miss,
+      prompt: api.c > 0.5 ? 'Which colour is missing from the rainbow?' : `A rainbow goes ${RAINBOW.map(x => x === miss ? 'hmm' : x).join(', ')}. Which colour is missing?`,
+      build(stage) {
+        const card = U.el('div', 'card rainbow');
+        let svg = '<svg viewBox="0 0 240 128" aria-hidden="true">';
+        RAINBOW.forEach((col, i) => {
+          const r = 108 - i * 15;
+          svg += `<path data-i="${i}" d="M${120 - r} 122 A${r} ${r} 0 0 1 ${120 + r} 122" fill="none" stroke="${i === mi ? '#b9a6d6' : C[col]}" stroke-width="${i === mi ? 5 : 14}" ${i === mi ? 'stroke-dasharray="7 6" stroke-linecap="round"' : ''}/>`;
+        });
+        svg += '</svg>';
+        card.innerHTML = svg;
+        card.querySelectorAll('path').forEach(p => { const i = +p.getAttribute('data-i'); if (i !== mi) U.tag(p, RAINBOW[i]); });
+        gap = card.querySelector(`path[data-i="${mi}"]`);
+        stage.appendChild(card);
+      },
+      onRight: () => { gap.setAttribute('stroke', C[miss]); gap.setAttribute('stroke-width', '14'); gap.removeAttribute('stroke-dasharray'); U.tag(gap, miss); },
+      choices: opts.map(o => ({ html: drop(o), cls: 'paint-choice', correct: o === miss, aria: o })),
+      flashChoices: false,
+      retry: 'Say the rainbow colours with me, and look for the gap.',
+      hint: `${said}. ${cap(miss)} is missing. Tap ${miss}.`,
+      praise: `Yes! ${said}! The rainbow is finished!`
+    });
+  }
+
+  // ---------- drag (or tap, then tap) things into homes ----------
+  // items: [{html, key, name}], homes: [{html, key}]. Resolves true when everything went home with no mistakes.
+  function placeQ(api, o) {
+    return api2 => new Promise(resolve => {
+      const sea = scene(api2);
+      api2.stage.style.flexDirection = 'column';
+      api2.stage.appendChild(sea.el);
+      const homesRow = U.el('div', 'homes'), itemsRow = U.el('div', 'loose');
+      api2.stage.appendChild(homesRow);
+      api2.choices.appendChild(itemsRow);
+      let misses = 0, left = o.items.length, sel = null, busy = false;
+      const homes = o.homes.map(h => {
+        const el = U.el('div', 'sea-home', h.html); el._h = h;
+        homesRow.appendChild(el);
+        el.onclick = () => { if (sel) putIn(sel, el); };
+        return el;
+      });
+      const items = o.items.map(it => {
+        const el = U.el('div', 'card sea-item', it.html); el._it = it;
+        el.setAttribute('role', 'button'); el.setAttribute('aria-label', it.name);
+        itemsRow.appendChild(el);
+        drag(el);
+        return el;
+      });
+      api2.prompt(o.prompt);
+      const select = el => {
+        items.forEach(x => x.classList.toggle('sel', x === el));
+        sel = el;
+        if (el) { PA.audio.sfx('tap'); api2.say(o.onPick(el._it)); }
+      };
+      function hintFor(el) {
+        homes.forEach(h => h.classList.toggle('hint', !!el && !h._full && h._h.key === el._it.key));
+      }
+      async function putIn(el, home) {
+        if (busy || !api2.alive || el._done) return;
+        if (!home || home._full) { select(el); return; }
+        if (home._h.key === el._it.key) {
+          busy = true;
+          el._done = true; home._full = true; select(null); hintFor(null);
+          el.classList.add('placed'); el.classList.remove('hint');
+          home.appendChild(el);
+          PA.audio.sfx('right'); api2.cheer();
+          left--;
+          await api2.say(o.onRight(el._it));
+          busy = false;
+          if (!left) { sea.ahead(); await api2.say(o.done || U.praise()); resolve(misses === 0); }
+        } else {
+          misses++; PA.audio.sfx('wrong'); sea.closer();
+          el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+          select(el);
+          if (misses >= 2) { hintFor(el); el.classList.add('hint'); }
+          api2.say(o.onWrong(el._it, home._h));
+        }
+      }
+      function drag(el) {
+        let id = null, sx = 0, sy = 0, moved = false, sc = 1;
+        el.addEventListener('pointerdown', e => {
+          if (el._done || !api2.alive || busy) return;
+          e.preventDefault();
+          id = e.pointerId; sx = e.clientX; sy = e.clientY; moved = false;
+          sc = (el.getBoundingClientRect().width / el.offsetWidth) || 1;
+          try { el.setPointerCapture(id); } catch (er) { }
+        });
+        el.addEventListener('pointermove', e => {
+          if (e.pointerId !== id) return;
+          const dx = e.clientX - sx, dy = e.clientY - sy;
+          if (!moved && Math.abs(dx) + Math.abs(dy) > 12) { moved = true; el.classList.add('dragging'); if (sel !== el) select(el); }
+          if (moved) el.style.transform = `translate(${dx / sc}px, ${dy / sc}px) scale(1.1)`;
+        });
+        const end = (e, cancel) => {
+          if (e.pointerId !== id) return;
+          id = null;
+          if (!moved) { if (!cancel) select(sel === el ? null : el); return; }
+          el.style.visibility = 'hidden';
+          const t = cancel ? null : document.elementFromPoint(e.clientX, e.clientY);
+          el.style.visibility = '';
+          el.classList.remove('dragging'); el.style.transform = '';
+          const home = t && t.closest ? t.closest('.sea-home') : null;
+          if (home) putIn(el, home);
+        };
+        el.addEventListener('pointerup', e => end(e, false));
+        el.addEventListener('pointercancel', e => end(e, true));
+      }
+    });
+  }
+
+  // 2: colour homes
+  function homeQ(api) {
+    const pool = BASIC.concat(api.c > 0.5 ? ['pink', 'brown'] : []);
+    const cols = S.pick('colours', pool, api.nOpts(3, 5), x => 'home:' + x);
+    const items = U.shuffle(cols.map(col => ({ html: thing(U.pick(KINDS), col), key: col, name: col })));
+    return {
+      key: 'home:' + cols.length,
+      run: placeQ(api, {
+        prompt: 'Help the sea friends hide from the shark! Drag each one into the home that is the same colour.',
+        items, homes: U.shuffle(cols).map(col => ({ html: caveHome(col), key: col })),
+        onPick: it => cap(it.name) + '!',
+        onRight: it => U.pick([`${cap(it.name)} home!`, `Safe in the ${it.name} home!`]),
+        onWrong: it => `That one is ${it.name}. Find the ${it.name} home.`,
+        done: 'Everyone is safe! Swim, mermaid, swim!'
+      })
+    };
+  }
+  // 5: mixing homes: put each colour on the two paints that make it
+  function mixHomeQ(api) {
+    const pairs = U.shuffle(PAIRS);
+    const pairHtml = p => `<div class="pairhome">${drop(p[0])}<b>+</b>${drop(p[1])}</div>`;
+    return {
+      key: 'mixhome',
+      run: placeQ(api, {
+        prompt: 'Mixing magic! Drag each sea friend onto the two colours that mix to make it.',
+        items: U.shuffle(pairs.map(p => ({ html: thing(U.pick(KINDS), p[2]), key: p[2], name: p[2], p }))),
+        homes: pairs.map(p => ({ html: pairHtml(p), key: p[2] })),
+        onPick: it => cap(it.name) + '!',
+        onRight: it => `${cap(it.p[0])} and ${it.p[1]} make ${it.name}!`,
+        onWrong: it => `${cap(it.name)} is made from ${it.p[0]} and ${it.p[1]}. Find ${it.p[0]} and ${it.p[1]}.`,
+        done: 'Mixing magic! Swim, mermaid, swim!'
+      })
+    };
+  }
+
+  // 4: mix it yourself
+  function makeQ(api) {
+    const pi = S.pick('colours', [0, 1, 2], 1, k => 'make:' + PAIRS[k][2])[0];
+    const [x, y, target] = PAIRS[pi];
+    const pots = PRIMARY.concat(api.c > 0.5 ? ['white'] : []);
+    return {
+      key: 'make:' + target,
+      run: api2 => new Promise(resolve => {
+        const sea = scene(api2);
+        api2.stage.style.flexDirection = 'column';
+        api2.stage.appendChild(sea.el);
+        const row = U.el('div', 'row');
+        const goal = U.tag(U.el('div', 'card goal', thing('fish', 'white')), 'fish');
+        const bowl = U.el('div', 'card bowl', drop(null));
+        row.append(goal, U.el('div', 'plus', '→'), bowl);
+        api2.stage.appendChild(row);
+        let first = null, misses = 0, busy = false;
+        const prompt = `Paint the fish ${target}! Tap two paints to mix ${target}.`;
+        api2.prompt(prompt);
+        const btns = pots.map(col => {
+          const b = U.el('button', 'card choice potc', pot(col));
+          b.setAttribute('aria-label', col);
+          U.tag(b, col);
+          b.onclick = async () => {
+            if (busy || !api2.alive) return;
+            PA.audio.sfx('tap');
+            if (!first) { first = col; bowl.innerHTML = drop(col); b.classList.add('picked'); api2.say(cap(col) + '...'); return; }
+            busy = true;
+            const a = first, res = mixOf(a, col);
+            first = null;
+            bowl.innerHTML = drop(res || 'brown');
+            bowl.classList.remove('pop'); void bowl.offsetWidth; bowl.classList.add('pop');
+            if (res === target) {
+              btns.forEach(z => z.classList.remove('picked', 'hint'));
+              goal.innerHTML = thing('fish', target);
+              PA.audio.sfx('right'); api2.cheer(); sea.ahead();
+              await api2.say(`${cap(a)} and ${col} make ${target}! You painted the fish ${target}!`);
+              return resolve(misses === 0);
+            }
+            misses++; PA.audio.sfx('wrong'); sea.closer();
+            const what = a === col ? `That's just ${a}.` : res ? `${cap(a)} and ${col} make ${res}.` : `${cap(a)} and ${col} make a muddy colour.`;
+            if (misses >= 2) {
+              await api2.say(`${what} ${cap(target)} is made from ${x} and ${y}. Tap ${x}, then ${y}.`);
+              btns.forEach(z => z.classList.toggle('hint', z.getAttribute('aria-label') === x || z.getAttribute('aria-label') === y));
+            } else await api2.say(`${what} We need ${target}. Try again!`);
+            bowl.innerHTML = drop(null);
+            btns.forEach(z => z.classList.remove('picked'));
+            busy = false;
+          };
+          api2.choices.appendChild(b);
+          return b;
+        });
+      })
+    };
+  }
+
+  PA.games.push({
+    id: 'colours', name: 'Mermaid Colours', icon: '🧜‍♀️', color: '#d4f3ff', maxLevel: 7,
+    skill: 'Naming colours, sorting by colour, mixing paint, the rainbow',
+    research: 'Naming colours, then sorting things by one attribute (an early maths and logic skill), then hands-on cause and effect with paint: two primary colours make a new one, white makes colours lighter, and the rainbow always comes in the same order. This is the usual order in early-years art and science.',
+    levels: ['Find the colour', 'Colour homes', 'What do two colours make?', 'Mix it yourself', 'Mixing homes', 'Lighter colours and brown', 'Rainbow order'],
+    tryAtHome: [
+      'Mix paints (or food colouring in water) together: what do red and yellow make?',
+      'Go on a colour hunt: find five red things in the house.',
+      'Sort the washing, the toys or the crayons into colour piles.',
+      'Squash two colours of play dough together and see what colour you get.'
+    ],
+    intro(lvl, api) {
+      const sea = scene(api);
+      api.stage.style.flexDirection = 'column';
+      api.stage.appendChild(sea.el);
+      return 'Oh no! A silly shark is chasing the mermaid! Answer the colour questions to help her swim to the beach. ' +
+        ['Let\'s find colours!', 'Let\'s help the sea friends get home!', 'Let\'s mix colours!', 'Let\'s mix paint!',
+          'Let\'s do mixing magic!', 'Let\'s make lighter colours!', 'Let\'s make a rainbow!'][lvl - 1];
+    },
+    next(api, i, lvl) {
+      if (lvl === 1) return findQ(api);
+      if (lvl === 2) return i % 2 ? findQ(api) : homeQ(api);
+      if (lvl === 3) return mixQ(api);
+      if (lvl === 4) return i % 2 ? mixQ(api) : makeQ(api);
+      if (lvl === 5) return i % 2 ? makeQ(api) : mixHomeQ(api);
+      if (lvl === 6) return i % 3 === 2 ? mixQ(api) : lightQ(api);
+      return i % 3 === 2 ? lightQ(api) : rainbowQ(api);
+    },
+    // she reaches the land and turns into a princess
+    async outro(api) {
+      const sea = scene(api);
+      api.hideGuide();
+      api.stage.style.flexDirection = 'column';
+      sea.el.classList.add('big');
+      api.stage.appendChild(sea.el);
+      await U.wait(60);
+      sea.mer.style.left = '74%';
+      sea.shark.classList.add('away');
+      sea.shark.style.left = '-40%';
+      await api.say('You did it! The mermaid swam all the way to the beach! Bye bye, silly shark!');
+      if (!api.alive) return;
+      const magic = U.el('div', 'magic emoji', '✨');
+      sea.mer.appendChild(magic);
+      PA.audio.sfx('sparkle');
+      await U.wait(900);
+      sea.mer.classList.add('human');
+      sea.mer.innerHTML = PA.art.princess(Object.assign({}, S.state.profile, { dressColor: U.THEMES.colours.dress }), 'wow');
+      PA.audio.sfx('sparkle');
+      await api.say('Sparkle, sparkle! Her tail turned into legs! Now she is a princess on the land!');
+      await U.wait(500);
+    }
+  });
+})();
+
+</script>
 <script>/* js/games/feelings.js */
 'use strict';
 // FEELINGS: emotion knowledge and simple social problem-solving. Preschool emotion knowledge predicts later
@@ -3010,7 +4114,8 @@ window.PA = window.PA || {};
     PA.games.forEach(g => {
       const rec = S.game(g.id);
       const t = U.el('button', 'tile');
-      t.innerHTML = `<div class="ico emoji" style="background:${g.color}">${g.icon}</div><div class="name">${g.name}</div>
+      const th = U.THEMES[g.id];
+      t.innerHTML = `<div class="ico emoji" style="background:${th ? th.bg : g.color}">${g.icon}</div>${th ? `<span class="tale emoji">${th.prop}</span>` : ''}<div class="name">${g.name}</div>
         <div class="lvl"><i style="width:${Math.round(100 * Math.min(rec.level, g.maxLevel) / g.maxLevel)}%"></i></div>`;
       t.setAttribute('aria-label', g.name);
       t.onclick = () => { A.sfx('tap'); if (S.timeUp()) U.rest(); else U.runGame(g); };
@@ -3037,32 +4142,48 @@ window.PA = window.PA || {};
     const wrap = U.el('div', 'maker');
     const preview = U.el('div', '', PA.art.princess(p, 'happy'));
     const opts = U.el('div', 'opts');
-    const rows = [['👗', 'dress', PA.art.DRESS, 'Pick a dress color!'], ['💇‍♀️', 'hair', PA.art.HAIR, 'Pick a hair color!'], ['✋', 'skin', PA.art.SKIN, 'Pick a skin color!']];
-    rows.forEach(([icon, key, colors, line]) => {
-      const r = U.el('div', 'opt-row', `<div class="lab emoji">${icon}</div>`);
-      U.tag(r.querySelector('.lab'), key);
+    // one button per thing she can colour; its colours appear underneath (a "none" swatch for the extras)
+    const ITEMS = [['👗', 'dress', PA.art.DRESS, 'her dress'], ['💇‍♀️', 'hair', PA.art.HAIR, 'her hair'], ['✋', 'skin', PA.art.SKIN, 'her skin'],
+      ['👑', 'crown', PA.art.CROWN, 'her crown'], ['👀', 'eyes', PA.art.EYES, 'her eyes'], ['🎀', 'bow', PA.art.BOW, 'a hair bow'],
+      ['📿', 'neck', PA.art.NECK, 'a necklace'], ['🪄', 'wand', PA.art.WAND, 'a magic wand']];
+    const tabs = U.el('div', 'item-tabs'), swatches = U.el('div', 'opt-row');
+    let cur = 0;
+    const showItem = (n, speak) => {
+      cur = n;
+      const [, key, colors, what] = ITEMS[n];
+      tabs.querySelectorAll('.item-tab').forEach((t, i) => t.classList.toggle('on', i === n));
+      swatches.innerHTML = '';
       colors.forEach((c, i) => {
-        const sw = U.el('button', 'swatch' + (p[key] === i ? ' on' : ''));
-        sw.style.background = c;
+        const sw = U.el('button', 'swatch' + ((p[key] || 0) === i ? ' on' : '') + (c ? '' : ' none'), c ? '' : '✕');
+        if (c) sw.style.background = c;
+        sw.setAttribute('aria-label', c ? 'colour ' + (i + 1) : 'none');
         sw.onclick = () => {
           p[key] = i; S.save(); A.sfx('tap');
-          r.querySelectorAll('.swatch').forEach(x => x.classList.remove('on')); sw.classList.add('on');
+          swatches.querySelectorAll('.swatch').forEach(x => x.classList.remove('on')); sw.classList.add('on');
           preview.innerHTML = PA.art.princess(p, 'wow');
-          if (Math.random() < 0.35) A.say(U.pick(['Pretty!', 'Beautiful!', 'Ooh, lovely!']));
+          if (Math.random() < 0.35) A.say(c ? U.pick(['Pretty!', 'Beautiful!', 'Ooh, lovely!']) : 'No ' + what.replace(/^(her|a) /, '') + '.');
         };
-        r.appendChild(sw);
+        swatches.appendChild(sw);
       });
-      r.querySelector('.lab').onclick = () => A.say(line);
-      opts.appendChild(r);
+      if (speak) A.say(`Pick a color for ${what}!`);
+    };
+    ITEMS.forEach(([icon, key], i) => {
+      const t = U.el('button', 'item-tab emoji', icon);
+      t.setAttribute('aria-label', key);
+      U.tag(t, key);
+      t.onclick = () => { A.sfx('tap'); showItem(i, true); };
+      tabs.appendChild(t);
     });
+    showItem(0, false);
+    opts.append(tabs, swatches);
     wrap.append(preview, opts);
     s.append(top, wrap);
     U.show(s);
     const finish = () => { p.made = true; S.save(); A.sfx('sparkle'); app.home(true); };
     done.onclick = finish;
     back.onclick = finish;
-    A.say(first ? 'Hello! Let\'s make your princess. Pick her dress, her hair, and her skin color. Then tap the green button.'
-      : 'Change your princess! Tap the colors.');
+    A.say(first ? 'Hello! Let\'s make your princess. Tap a button on top, like the dress or the crown, then pick a color. When you are done, tap the green button.'
+      : 'Change your princess! Tap a button on top, then pick a color.');
   };
 
   // ---------- sticker book ----------
@@ -3228,6 +4349,7 @@ window.PA = window.PA || {};
         <li><b>Effort praise.</b> "You counted carefully," not "you're so smart". Praising effort builds persistence (Mueller &amp; Dweck, 1998; Gunderson et al., 2013).</li>
         <li><b>Made for pre-readers.</b> Everything is spoken, with a 🔊 repeat button on every question. Whatever the voice names lights up as it's said (each gem as it's counted, each bead as a pattern is read), linking the spoken word to the thing. Answers never light up before she's chosen.</li>
         <li><b>Clear next step.</b> The button to press next (Play, Done, the spinner) glows gently.</li>
+        <li><b>Story worlds.</b> Each game is set in a different fairy tale (an ice palace, a rose castle, a lantern tower, a midnight ball, under the sea and more), and her own princess wears that story's colours there. The pictures are original, with no film characters.</li>
         <li><b>A steady climb.</b> On top of the levels, every round makes that game 2.5% harder, so it keeps stretching her even between level-ups.</li>
         <li><b>Calm.</b> Rounds are 10 questions (adjustable) with a sticker at the end. No ads, no purchases, no streaks, and a daily time limit. Paediatric advice for ages 2-5 is about an hour of quality screen time a day, best shared with a grown-up.</li>
       </ul>

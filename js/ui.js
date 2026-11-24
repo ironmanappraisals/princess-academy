@@ -122,13 +122,47 @@ window.PA = window.PA || {};
   const RETRY = ['Hmm, not that one. Try again!', 'Almost! Have another look.', 'Oops! Let\'s try again.'];
   U.retry = () => U.pick(RETRY);
 
+  // ---------- fairy-tale themes: each game is a different story world (original pictures, no characters) ----------
+  // bg: the game screen; deco: little pictures floating round the edges; dress: the princess's outfit there;
+  // prop: something she holds.
+  U.THEMES = {
+    count: { tale: 'Ice palace', bg: 'linear-gradient(180deg,#e4f6ff 0%,#c8e6ff 55%,#f0fbff 100%)', deco: ['❄️', '💎', '❄️', '✨', '❄️', '⛄'], dress: '#8fd3ff', prop: '❄️' },
+    path: { tale: 'Rose castle', bg: 'linear-gradient(180deg,#fff4c9 0%,#ffdbe2 60%,#ffeccb 100%)', deco: ['🌹', '📚', '🕯️', '🌹', '🫖', '🌹'], dress: '#ffcc33', prop: '🌹' },
+    sounds: { tale: 'Lantern tower', bg: 'linear-gradient(180deg,#e9d9ff 0%,#ffdaef 60%,#ffeccc 100%)', deco: ['🏮', '🌸', '🏮', '☀️', '🦎', '🏮'], dress: '#a77bff', prop: '🏮' },
+    trace: { tale: 'Frog-prince pond', bg: 'linear-gradient(180deg,#e2fbe4 0%,#d4f2ff 60%,#fff2d8 100%)', deco: ['🐸', '🌿', '💧', '👑', '🐸', '🌿'], dress: '#78d38c', prop: '🐸' },
+    rhyme: { tale: 'Midnight ball', bg: 'linear-gradient(180deg,#d2e2ff 0%,#e8deff 55%,#d8f1ff 100%)', deco: ['🎃', '👠', '🕛', '✨', '🐭', '👠'], dress: '#a8d4ff', prop: '👠' },
+    pattern: { tale: 'Woodland cottage', bg: 'linear-gradient(180deg,#e4f7da 0%,#fff3cb 60%,#ffe3e3 100%)', deco: ['🍎', '🐦', '🍄', '🌳', '🐿️', '🍎'], dress: '#4f7dff', prop: '🍎' },
+    shapes: { tale: 'Desert palace', bg: 'linear-gradient(180deg,#ffe8c4 0%,#ffd3de 55%,#d2eaff 100%)', deco: ['🌙', '🐪', '⭐', '🕌', '🐯', '⭐'], dress: '#36c2b4', prop: '🪔' },
+    feelings: { tale: 'Sleeping castle', bg: 'linear-gradient(180deg,#ffe2f1 0%,#f4deff 60%,#e0f2ff 100%)', deco: ['🧚', '🌸', '🦋', '💤', '🧚', '🌸'], dress: '#ff8fc8', prop: '🧚' },
+    colours: { tale: 'Under the sea', bg: 'linear-gradient(180deg,#c4f1ff 0%,#8fd6f6 60%,#68bdea 100%)', deco: ['🐚', '🐠', '🐙', '🐬', '🦀', '🐚'], dress: '#36c98f', prop: '🐚' }
+  };
+  const DECO_AT = [[3, 14], [94, 12], [6, 52], [95, 50], [22, 90], [80, 92]];
+  U.deco = function (theme) {
+    const d = U.el('div', 'deco');
+    theme.deco.forEach((e, i) => {
+      const s = U.el('span', 'emoji', e);
+      s.style.left = DECO_AT[i % DECO_AT.length][0] + '%'; s.style.top = DECO_AT[i % DECO_AT.length][1] + '%';
+      s.style.animationDelay = (i * 0.7) + 's';
+      d.appendChild(s);
+    });
+    return d;
+  };
+  // her princess dressed for this game's story
+  U.themedPrincess = function (theme, mood) {
+    if (!theme) return PA.art.princess(null, mood);
+    return PA.art.princess(Object.assign({}, PA.store.state.profile, { dressColor: theme.dress }), mood) +
+      `<span class="prop emoji">${theme.prop}</span>`;
+  };
+
   const STICKERS = ['🦄', '🌈', '🌟', '🦋', '🌸', '🍰', '🎀', '👑', '💎', '🐚', '🧁', '🍓', '🐱', '🐰', '🦢', '🍭', '🎠', '🧚', '🌺', '🍩', '🐬', '🦩', '🌙', '🐞', '🐢', '🦊', '🐼', '🌻', '🍦', '🎈'];
 
   // ---------- the round runner ----------
   U.runGame = function (game) {
     const rec = PA.store.game(game.id);
     const level = Math.min(rec.level, game.maxLevel);
-    const screen = U.el('div', 'screen');
+    const screen = U.el('div', 'screen themed');
+    const theme = U.THEMES[game.id];
+    if (theme) { screen.style.background = theme.bg; screen.appendChild(U.deco(theme)); }
     const top = U.el('div', 'topbar');
     const homeBtn = U.el('button', 'icon-btn', '<span class="emoji">🏰</span>');
     homeBtn.setAttribute('aria-label', 'Back to the castle');
@@ -140,7 +174,7 @@ window.PA = window.PA || {};
     const play = U.el('div', 'play');
     const stage = U.el('div', 'stage');
     const choices = U.el('div', 'choices');
-    const guide = U.el('div', 'guide', PA.art.princess(null, 'happy'));
+    const guide = U.el('div', 'guide', U.themedPrincess(theme, 'happy'));
     // fitbox holds the question; if a question is taller than the screen (e.g. a phone held sideways) it is
     // shrunk to fit, so nothing ever needs scrolling
     const fitbox = U.el('div', 'fitbox');
@@ -160,7 +194,7 @@ window.PA = window.PA || {};
     let prompt = '';
     const c = PA.store.challenge(game.id);
     const api = {
-      game, level, screen, play, stage, choices, alive: true,
+      game, level, screen, play, stage, choices, guide, theme, alive: true,
       c, // 0..1 from the 2.5%-per-round ramp: games use it for bigger numbers, more choices, shorter peeks
       nOpts: (base, max) => Math.min(max, base + Math.floor(c * (max - base + 0.999))),
       name: name(),
@@ -168,9 +202,9 @@ window.PA = window.PA || {};
       setPrompt: text => { prompt = text; },
       prompt: text => { prompt = text; return api.say(text); },
       cheer: function () {
-        guide.innerHTML = PA.art.princess(null, 'wow');
+        guide.innerHTML = U.themedPrincess(theme, 'wow');
         guide.classList.remove('cheer'); void guide.offsetWidth; guide.classList.add('cheer');
-        setTimeout(() => { if (api.alive) guide.innerHTML = PA.art.princess(null, 'happy'); }, 1100);
+        setTimeout(() => { if (api.alive) guide.innerHTML = U.themedPrincess(theme, 'happy'); }, 1100);
       },
       clear: () => {
         stage.innerHTML = ''; choices.innerHTML = '';
@@ -207,7 +241,7 @@ window.PA = window.PA || {};
         api.setProgress(1);
       } else {
         // the ramp also makes rounds longer: up to half as long again at +100%
-        const len = Math.round((PA.store.state.settings.roundLen || 10) * (1 + c * 0.5));
+        const len = api.roundLen = Math.round((PA.store.state.settings.roundLen || 10) * (1 + c * 0.5));
         if (game.intro) await api.say(game.intro(level, api));
         let done = 0, qi = 0;
         while (done < len) {
@@ -239,6 +273,8 @@ window.PA = window.PA || {};
         }
       }
       if (!api.alive) return;
+      // a story ending before the sticker (the mermaid reaches the beach)
+      if (game.outro) { api.clear(); await game.outro(api, correct, total); if (!api.alive) return; }
       const res = PA.store.endRound(game.id, correct, total, game.maxLevel);
       screen.onLeave = null; api.alive = false;
       PA.store.tickPlay(Date.now() - started);
@@ -303,6 +339,8 @@ window.PA = window.PA || {};
     if (bonus) got.push(U.pick(STICKERS));
     got.forEach(s => PA.store.addSticker(s));
     const screen = U.el('div', 'screen');
+    const theme = U.THEMES[game.id];
+    if (theme) screen.style.background = theme.bg;
     const c = U.el('div', 'center');
     const n = name();
     const head = res.up ? 'New level unlocked!' : bonus ? 'Super challenge star!' : 'You did it' + (n ? ', ' + n : '') + '!';

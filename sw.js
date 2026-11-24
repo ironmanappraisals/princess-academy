@@ -1,10 +1,10 @@
 // Offline cache. Only used when the app is served over HTTPS (iOS ignores service workers on plain http).
-const VERSION = 'pa-v8';
+const VERSION = 'pa-v9';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',
   'js/audio.js', 'js/store.js', 'js/art.js', 'js/ui.js', 'js/app.js',
   'js/games/count.js', 'js/games/path.js', 'js/games/sounds.js', 'js/games/rhyme.js',
-  'js/games/pattern.js', 'js/games/shapes.js', 'js/games/feelings.js',
+  'js/games/pattern.js', 'js/games/shapes.js', 'js/games/feelings.js', 'js/games/trace.js', 'js/games/colours.js',
   'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'
 ];
 self.addEventListener('install', e => {
